@@ -8,6 +8,9 @@ import java.sql.SQLException;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import org.postgresql.*;
+
+import Controller.Conexao;
+
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -30,6 +33,24 @@ public class Apresentacao extends JFrame {
 				}
 			}
 		});
+		// Conexão com o BD
+		Conexao teca = new Conexao();
+		try {
+			teca.setConnection("TECA", "postgres", "102030");
+		} catch (SQLException sqle) {
+			JOptionPane.showMessageDialog(null, sqle.getClass() + "\n" + sqle.getMessage(),null,JOptionPane.ERROR_MESSAGE);
+		}
+		// Testes
+		try {
+			teca.insertQuery(1, "teste");
+		} catch (SQLException sqle) {
+			JOptionPane.showMessageDialog(null, sqle.getClass() + "\n" + sqle.getMessage(),null,JOptionPane.ERROR_MESSAGE);
+		}
+		try {
+			teca.selectQuery();
+		} catch (SQLException sqle) {
+			JOptionPane.showMessageDialog(null, sqle.getClass() + "\n" + sqle.getMessage(),null,JOptionPane.ERROR_MESSAGE);
+		}
 	}
 
 	/**
