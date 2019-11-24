@@ -1,7 +1,11 @@
 package Model;
 
+import java.time.LocalDate;
+
 public class Material {
+	
 	private String titulo;
+	private String anoProducao;
 	private String anoPublicacao;
 	private String urlDisponivel;
 	private int nrPaginas;
