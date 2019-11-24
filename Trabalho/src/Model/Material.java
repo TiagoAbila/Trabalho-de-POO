@@ -1,6 +1,7 @@
 package Model;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 
 public class Material {
 	
@@ -12,6 +13,8 @@ public class Material {
 	private String edicao;
 	private String nrISBN;
 	private String nrISSN;
+	private ArrayList<Autor> autores = new ArrayList();
+	private ArrayList<PalavraChave> palavrasChave = new ArrayList();
 	
 	public Material() {
 		
@@ -86,6 +89,19 @@ public class Material {
 		this.nrISSN = nrISSN;
 	}
 	
+	public void addAutor(Autor novo) {
+		if (novo == null) {
+			throw new IllegalArgumentException("Autor inválido.");
+		}
+		this.autores.add(novo);
+	}
+	
+	public void addProjeto(PalavraChave novo) {
+		if (novo == null) {
+			throw new IllegalArgumentException("Palavra Chave inválida");
+		}
+		this.palavrasChave.add(novo);
+	}
 	
 	
 	
