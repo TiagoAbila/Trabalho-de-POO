@@ -2,13 +2,30 @@ package View;
 
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
-
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import org.postgresql.*;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 public class Apresentacao extends JFrame {
-
+	//Conexão
+	private Connection conexao = null;
+	
+	//Método iniciador da conexão
+	public void setConnection(String db, String usr, String pass) {
+		try {
+			conexao = DriverManager.getConnection("jdbc:postgresql://localhost:5432/" + db, usr, pass);
+		} catch (SQLException sqle) {
+			JOptionPane.showMessageDialog(contentPane, sqle.getClass() + "/n" + sqle.getMessage() + "/n" + sqle.getCause(), null, JOptionPane.ERROR_MESSAGE);
+		}
+	}
+	
 	private JPanel contentPane;
 
 	/**
