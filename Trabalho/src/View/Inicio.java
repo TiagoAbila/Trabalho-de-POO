@@ -19,7 +19,7 @@ import java.awt.event.ActionEvent;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
-
+//
 public class Inicio extends JFrame {
 
 	private JPanel contentPane;
