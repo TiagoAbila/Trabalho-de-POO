@@ -26,7 +26,7 @@ public class Leitura {
 	ArrayList<Material> materiais = new ArrayList();
 	private int linhaCorrente = 0;
 	
-	public Leitura(File arquivo) throws IOException {
+	public Leitura(File arquivo) throw s IOException {
 	  FileReader leitor = new FileReader(arquivo);
 	  BufferedReader ler = new BufferedReader(leitor); 
 	  String l;
