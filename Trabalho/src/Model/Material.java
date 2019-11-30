@@ -1,9 +1,11 @@
 package Model;
-
+//
 import java.time.LocalDate;
+import java.util.ArrayList;
 
 public class Material {
 	
+	private int linha;
 	private String titulo;
 	private String anoProducao;
 	private String anoPublicacao;
@@ -12,14 +14,19 @@ public class Material {
 	private String edicao;
 	private String nrISBN;
 	private String nrISSN;
+	private ArrayList<Autor> autores = new ArrayList();
+	private ArrayList<PalavraChave> palavrasChave = new ArrayList();
 	
-	public Material() {
-		
+	public Material(int linha) {
+		this.setLinha(linha);
+	}	
+	
+	public int getLinha() {
+		return linha;
 	}
-	
-	public Material(String titulo, String urlDisponivel) {
-		this.setTitulo(titulo);
-		this.setUrlDisponivel(urlDisponivel);
+
+	public void setLinha(int linha) {
+		this.linha = linha;
 	}
 
 	public String getTitulo() {
@@ -86,6 +93,19 @@ public class Material {
 		this.nrISSN = nrISSN;
 	}
 	
+	public void addAutor(Autor novo) {
+		if (novo == null) {
+			throw new IllegalArgumentException("Autor inválido.");
+		}
+		this.autores.add(novo);
+	}
+	
+	public void addProjeto(PalavraChave novo) {
+		if (novo == null) {
+			throw new IllegalArgumentException("Palavra Chave inválida");
+		}
+		this.palavrasChave.add(novo);
+	}
 	
 	
 	
