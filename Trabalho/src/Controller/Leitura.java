@@ -1,4 +1,6 @@
 package Controller;
+import Model.*;
+
 //
 import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
@@ -19,23 +21,24 @@ import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 
 public class Leitura {
-	String ab = "";
-	  StringBuilder builder = new StringBuilder();
+	ArrayList<Autor> autores = new ArrayList();
+	ArrayList<PalavraChave> palavrasChaves = new ArrayList();
+	ArrayList<Material> materiais = new ArrayList();
+	private int linhaCorrente = 0;
+	
 	public Leitura(File arquivo) throws IOException {
 	  FileReader leitor = new FileReader(arquivo);
 	  BufferedReader ler = new BufferedReader(leitor); 
 	  String l;
+	  String [] newRow;
+
 	  while((l = ler.readLine()) != null) {	
-		  builder.append(l+"\n");
+		 linhaCorrente++;
+		 newRow = l.split(";");
+		 Material matCorrente = new Material(linhaCorrente);
+		 Autor autCorrente = new Autor (linhaCorrente);
+		 PalavraChave palChaCorrente = new PalavraChave(linhaCorrente);
+		 
 	  }
-	  ab = builder.toString();
-	}
-	public String getAb() {
-		return ab;
-	}
-	public void setAb(String ab) {
-		this.ab = ab;
-	}
-	
-	
+	}	
 }

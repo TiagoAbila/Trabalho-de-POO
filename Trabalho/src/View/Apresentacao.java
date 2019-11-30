@@ -59,16 +59,7 @@ public class Apresentacao extends JFrame {
 		
 		JTextPane textPane = new JTextPane();
 		textPane.setBounds(10, 11, 739, 351);
-		panel.add(textPane);
-		
-		JButton btnNewButton = new JButton("New button");
-		btnNewButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				textPane.setText(contrador.getAb());			
-			}
-		});
-		btnNewButton.setBounds(607, 373, 89, 23);
-		panel.add(btnNewButton);
+		panel.add(textPane);		
 		
 		JPanel panel_1 = new JPanel();
 		tabbedPane.addTab(" 2 ", null, panel_1, null);
