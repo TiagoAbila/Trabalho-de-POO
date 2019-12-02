@@ -1,11 +1,7 @@
 package Model;
-//
-import java.time.LocalDate;
-import java.util.ArrayList;
 
 public class Material {
 	
-	private int linha;
 	private String titulo;
 	private String anoProducao;
 	private String anoPublicacao;
@@ -14,19 +10,20 @@ public class Material {
 	private String edicao;
 	private String nrISBN;
 	private String nrISSN;
-	private ArrayList<Autor> autores = new ArrayList();
-	private ArrayList<PalavraChave> palavrasChave = new ArrayList();
 	
-	public Material(int linha) {
-		this.setLinha(linha);
-	}	
 	
-	public int getLinha() {
-		return linha;
-	}
-
-	public void setLinha(int linha) {
-		this.linha = linha;
+	
+	public Material(String titulo, String anoProducao, String anoPublicacao, String urlDisponivel, String nrPaginas,
+			String edicao, String nrISBN, String nrISSN) {
+		this.setTitulo(titulo);
+		this.setAnoProducao(anoProducao);
+		this.setAnoPublicacao(anoPublicacao);
+		this.setUrlDisponivel(urlDisponivel);
+		//TODO: Coverter String para int no numero de páginas
+		//this.setNrPaginas(nrPaginas);
+		this.setEdicao(edicao);
+		this.setNrISBN(nrISBN);
+		this.setNrISSN(nrISSN);
 	}
 
 	public String getTitulo() {
@@ -93,20 +90,9 @@ public class Material {
 		this.nrISSN = nrISSN;
 	}
 	
-	public void addAutor(Autor novo) {
-		if (novo == null) {
-			throw new IllegalArgumentException("Autor inválido.");
-		}
-		this.autores.add(novo);
-	}
-	
-	public void addProjeto(PalavraChave novo) {
-		if (novo == null) {
-			throw new IllegalArgumentException("Palavra Chave inválida");
-		}
-		this.palavrasChave.add(novo);
-	}
-	
-	
-	
 }
+
+
+
+
+
