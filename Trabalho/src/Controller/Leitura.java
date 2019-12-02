@@ -266,6 +266,7 @@ public class Leitura {
 	
 	
 
+
 	//GETERS E SETERS
 	public ArrayList<Linha> getLinhas() {
 		return linhas;
@@ -346,4 +347,5 @@ public class Leitura {
 	public void setLinhaCorrente(int linhaCorrente) {
 		this.linhaCorrente = linhaCorrente;
 	}
+
 }
