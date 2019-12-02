@@ -7,6 +7,7 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+import javax.swing.filechooser.FileFilter;
 
 import Controller.Conexao;
 import javax.swing.JButton;
@@ -76,7 +77,7 @@ public class Inicio extends JFrame {
 		btnNovo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				File file;
-				JFileChooser jfc = new JFileChooser(".");
+				JFileChooser jfc = new JFileChooser("C:\\Users\\Pedro\\Desktop\\teste");
 				int retorno = jfc.showOpenDialog(null);
 				if (retorno == JFileChooser.APPROVE_OPTION) {
 					file = jfc.getSelectedFile();
@@ -101,7 +102,7 @@ public class Inicio extends JFrame {
 		btnExiste.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				File file;
-				JFileChooser jfc = new JFileChooser(".");
+				JFileChooser jfc = new JFileChooser("C:\\Users\\Pedro\\Desktop\\teste");
 				int retorno = jfc.showOpenDialog(null);
 				if (retorno == JFileChooser.APPROVE_OPTION) {
 					file = jfc.getSelectedFile();
