@@ -1,6 +1,8 @@
 package Model;
 
-public class PalavraChave {
+import java.io.Serializable;
+
+public class PalavraChave implements Serializable {
 
 	private String palavraChave;
 

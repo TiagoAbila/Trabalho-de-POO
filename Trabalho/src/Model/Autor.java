@@ -1,6 +1,8 @@
 package Model;
 
-public class Autor {
+import java.io.Serializable;
+
+public class Autor implements Serializable {
 
 	private String autor;
 

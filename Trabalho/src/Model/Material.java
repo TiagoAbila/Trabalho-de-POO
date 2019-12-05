@@ -1,6 +1,8 @@
 package Model;
 
-public class Material {
+import java.io.Serializable;
+
+public class Material implements Serializable {
 	
 	private String titulo;
 	private String anoProducao;

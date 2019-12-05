@@ -1,6 +1,8 @@
 package Model;
 
-public class LocalPublicacao {
+import java.io.Serializable;
+
+public class LocalPublicacao implements Serializable {
 	private String localPublicacao;
 
 	public LocalPublicacao(String localPublicacao) {
