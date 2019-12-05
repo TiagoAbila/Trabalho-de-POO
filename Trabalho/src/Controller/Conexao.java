@@ -61,6 +61,7 @@ public class Conexao {
 		String cd_local_publicacao = null;
 		String tp_material = null;
 		String tp_divulgacao = null;
+		
 		query = conexao.createStatement();
 		query.execute(
 				"insert into tipo_material (ds_material) values ('"+ds_material+"');\r\n" + 
@@ -86,7 +87,7 @@ public class Conexao {
 				"	"+cd_editora+",\r\n" + // Sera substituido por select
 				"	"+cd_entidade+",\r\n" + // Sera substituido por select
 				"	"+cd_local_publicacao+",\r\n" + // Sera substituido por select
-				"	"+tp_material+",\r\n" + // Sera substituido por select
+				"	"+getIndexMaterial(ds_material)+",\r\n" + 
 				"	"+tp_divulgacao+",\r\n" + // Sera substituido por select
 				"	'"+nm_titulo+"',\r\n" + 
 				"	'"+ds_ano_producao+"',\r\n" + 
@@ -105,4 +106,21 @@ public class Conexao {
 			query.execute("insert into palavra_chave (ds_palavra_chave) values ('"+ds_palavra_chave[i]+"');");
 		}
 	}
+	
+	public int getIndexMaterial( String ds_material ) throws SQLException {
+		query  = conexao.createStatement();
+		ResultSet result;
+		result = query.executeQuery("Select tp_material from tipo_material where ds_material like '"+ds_material+"';");
+		result.first();
+		result.getInt(1);
+		if (  result.wasNull() ) {
+			query.execute("Insert into tipo_material (ds_material) values ('"+ds_material+"');");
+			result = query.executeQuery("Select tp_material from tipo_material where ds_material like '"+ds_material+"';");
+			result.first();
+			return result.getInt(1);
+ 		} else {
+ 			return result.getInt(1);
+ 		}
+	} 
+	
 }
