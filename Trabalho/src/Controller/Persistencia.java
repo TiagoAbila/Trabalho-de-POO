@@ -9,12 +9,9 @@ import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 
 public class Persistencia {
-	private static void gravarObjetos(ArrayList<Object> lista) {
+	private static void GravarObjetos(ArrayList<Object> lista) {
 		File arq = new File("ArquivoGeral.dat");
 		try {
-			arq.delete();
-			arq.createNewFile();
-
 			ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(arq));
 			oos.writeObject(lista);
 			oos.close();
@@ -23,7 +20,7 @@ public class Persistencia {
 		}
 	}
 
-	public static ArrayList<Object> lerObjetos() {
+	public static ArrayList<Object> BuscarObjetos() {
 		ArrayList<Object> lista = new ArrayList();
 		try {
 			File arq = new File("ArquivoGeral.dat");
