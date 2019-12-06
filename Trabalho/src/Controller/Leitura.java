@@ -22,8 +22,7 @@ import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 
 public class Leitura {
-	
-	//DECLARAÇÃO
+
 	private ArrayList<Linha> linhas = new ArrayList();
 	private ArrayList<Editora> editoras = new ArrayList();
 	private ArrayList<Autor> autores = new ArrayList();
@@ -36,8 +35,6 @@ public class Leitura {
 	private int linhaCorrente = 0;
 	private static int contadorTeste = 0;
 
-	
-	//CONSTRUTOR
 	public Leitura(File arquivo) throws IOException {
 		FileReader leitor = new FileReader(arquivo);
 		BufferedReader ler = new BufferedReader(leitor);
@@ -47,7 +44,7 @@ public class Leitura {
 			while ((l = ler.readLine()) != null) {
 				Linha novaLinha = new Linha(linhaCorrente++);
 				newRow = (l.replaceAll(";", " ; ")).split(";");
-				// inicio - Criando Objetos
+
 				TipoMaterial novoTipoMat = new TipoMaterial(newRow[0]);
 				novoTipoMat = adicionarNaLista(novoTipoMat);
 				novaLinha.setTipoMateLinha(novoTipoMat);
@@ -55,33 +52,41 @@ public class Leitura {
 				TipoDivulgacao novoTipoDiv = new TipoDivulgacao(newRow[1]);
 				novoTipoDiv = adicionarNaLista(novoTipoDiv);
 				novaLinha.setTipoDivulLinha(novoTipoDiv);
-				
+
 				Entidade novaEntidade = new Entidade(newRow[2]);
 				novaEntidade = adicionarNaLista(novaEntidade);
 				novaLinha.setEntidadeLinha(novaEntidade);
-				
+
 				Editora novaEditora = new Editora(newRow[11]);
 				novaEditora = adicionarNaLista(novaEditora);
 				novaLinha.setEditoraLinha(novaEditora);
-				
-				//TODO: Tratamento especial na criação do autor 
-				//Autor novoAutor = new Autor(newRow[4]);
-				//novoAutor = adicionarNaLista(novoAutor);
-				//novaLinha.setAutor(novoAutor);
-				
+
+				String[] autoresDaRow = newRow[4].split(",");
+				if (autoresDaRow.length > 0) {
+					for (String autor : autoresDaRow) {
+						Autor novoAutor = new Autor(autor);
+						novoAutor = adicionarNaLista(novoAutor);
+						novaLinha.addAutor(novoAutor);
+					}
+				} else {
+					Autor novoAutor = new Autor(newRow[4]);
+					novoAutor = adicionarNaLista(novoAutor);
+					novaLinha.addAutor(novoAutor);
+
+				}
+
 				PalavraChave novaPalavra = new PalavraChave(newRow[6]);
 				novaPalavra = adicionarNaLista(novaPalavra);
 				novaLinha.setPalavraChaveLinha(novaPalavra);
-				
+
 				LocalPublicacao novoLocal = new LocalPublicacao(newRow[10]);
 				novoLocal = adicionarNaLista(novoLocal);
 				novaLinha.setLocalPubliLinha(novoLocal);
-				
-				//TODO: newRow[3] Tipo de Organização
-				Material novoMaterial = new Material(newRow[5],newRow[7],newRow[8],newRow[13],newRow[12],newRow[9],newRow[14],newRow[15]);
+
+				Material novoMaterial = new Material(newRow[5], newRow[7], newRow[8], newRow[13], newRow[12], newRow[9],
+						newRow[14], newRow[15]);
 				novoMaterial = adicionarNaLista(novoMaterial);
 				novaLinha.setMaterialLinha(novoMaterial);
-				// fim - Criando Objetos
 				linhas.add(novaLinha);
 				contadorTeste++;
 			}
@@ -91,7 +96,80 @@ public class Leitura {
 		}
 	}
 	
-	//TESTE
+	
+
+	
+	public void Substituir(Editora objectSource, Editora objectTarget) {
+		for(Linha linha: linhas) {
+			if(linha.getEditoraLinha().equals(objectTarget)) {
+				linha.setEditoraLinha(objectSource);
+			}
+		}
+	}
+	
+	public void Substituir(Entidade objectSource, Entidade objectTarget) {
+		for(Linha linha: linhas) {
+			if(linha.getEntidadeLinha().equals(objectTarget)) {
+				linha.setEntidadeLinha(objectSource);
+			}
+		}
+	}
+	
+	public void Substituir(LocalPublicacao objectSource, LocalPublicacao objectTarget) {
+		for(Linha linha: linhas) {
+			if(linha.getLocalPubliLinha().equals(objectTarget)) {
+				linha.setLocalPubliLinha(objectSource);
+			}
+		}
+	}
+	
+	public void Substituir(Material objectSource, Material objectTarget) {
+		for(Linha linha: linhas) {
+			if(linha.getMaterialLinha().equals(objectTarget)) {
+				linha.setMaterialLinha(objectSource);
+			}
+		}
+	}
+	
+	public void Substituir(PalavraChave objectSource, PalavraChave objectTarget) {
+		for(Linha linha: linhas) {
+			if(linha.getPalavraChaveLinha().equals(objectTarget)) {
+				linha.setPalavraChaveLinha(objectSource);
+			}
+		}
+	}
+	
+	public void Substituir(TipoDivulgacao objectSource, TipoDivulgacao objectTarget) {
+		for(Linha linha: linhas) {
+			if(linha.getTipoDivulLinha().equals(objectTarget)) {
+				linha.setTipoDivulLinha(objectSource);
+			}
+		}
+	}
+	
+	public void Substituir(TipoMaterial objectSource, TipoMaterial objectTarget) {
+		for(Linha linha: linhas) {
+			if(linha.getTipoMateLinha().equals(objectTarget)) {
+				linha.setTipoMateLinha(objectSource);
+			}
+		}	
+	}
+	
+	public void Substituir(Autor objectSource, Autor objectTarget) {
+		ArrayList<Autor> a = new ArrayList();
+		for(Linha linha: linhas) {
+			for(Autor autor: linha.getAutores()) {
+				if(autor.equals(objectTarget)){
+					a.add(objectSource);
+				}else{
+					a.add(autor);
+				}
+			}
+			linha.setAutores(a);
+		}
+		
+	}
+	
 
 	public int getContadorTeste() {
 		return this.contadorTeste;
@@ -156,8 +234,6 @@ public class Leitura {
 		}
 		return montador.toString();
 	}
-	
-	//CONTROLE DE REDUNDANCIA E ADIÇÃO OS OBJETOS NAS SUAS RESPECTIVAS ARRAYS
 
 	public TipoMaterial adicionarNaLista(TipoMaterial objeto) {
 		String nomeObj = objeto.getTipoMaterial().toLowerCase();
@@ -171,7 +247,6 @@ public class Leitura {
 		}
 		return objeto;
 	}
-	
 
 	public TipoDivulgacao adicionarNaLista(TipoDivulgacao objeto) {
 		String nomeObj = objeto.getTipoDivulgacao().toLowerCase();
@@ -197,8 +272,8 @@ public class Leitura {
 			entidades.add(objeto);
 		}
 		return objeto;
-	} 
-	
+	}
+
 	public Editora adicionarNaLista(Editora objeto) {
 		String nomeObj = objeto.getEditora().toLowerCase();
 		for (Editora obj : editoras) {
@@ -210,8 +285,8 @@ public class Leitura {
 			editoras.add(objeto);
 		}
 		return objeto;
-	} 
-	
+	}
+
 	public Autor adicionarNaLista(Autor objeto) {
 		String nomeObj = objeto.getAutor().toLowerCase();
 		for (Autor obj : autores) {
@@ -223,8 +298,8 @@ public class Leitura {
 			autores.add(objeto);
 		}
 		return objeto;
-	} 
-	
+	}
+
 	public PalavraChave adicionarNaLista(PalavraChave objeto) {
 		String nomeObj = objeto.getPalavraChave().toLowerCase();
 		for (PalavraChave obj : palavras) {
@@ -236,8 +311,8 @@ public class Leitura {
 			palavras.add(objeto);
 		}
 		return objeto;
-	} 
-	
+	}
+
 	public LocalPublicacao adicionarNaLista(LocalPublicacao objeto) {
 		String nomeObj = objeto.getLocalPublicacao().toLowerCase();
 		for (LocalPublicacao obj : locais) {
@@ -249,8 +324,8 @@ public class Leitura {
 			locais.add(objeto);
 		}
 		return objeto;
-	} 
-	
+	}
+
 	public Material adicionarNaLista(Material objeto) {
 		String nomeObj = objeto.getTitulo().toLowerCase();
 		for (Material obj : materiais) {
@@ -262,16 +337,12 @@ public class Leitura {
 			materiais.add(objeto);
 		}
 		return objeto;
-	} 
-	
-	
+	}
 
-
-	//GETERS E SETERS
 	public ArrayList<Linha> getLinhas() {
 		return linhas;
 	}
-	
+
 	public void setLinhas(ArrayList<Linha> linhas) {
 		this.linhas = linhas;
 	}

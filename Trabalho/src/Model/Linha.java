@@ -1,9 +1,10 @@
 package Model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 public class Linha implements Serializable {
-	private Autor autorLinha;
+	private ArrayList<Autor> autores = new ArrayList();
 	private Editora editoraLinha;
 	private LocalPublicacao localPubliLinha;
 	private Material materialLinha;
@@ -19,6 +20,17 @@ public class Linha implements Serializable {
 		this.setIdLinha(idLinha);
 	}	
 
+	public void addAutor(Autor autor) {
+		this.autores.add(autor);
+	}
+	
+	public ArrayList<Autor> getAutores(){
+		return this.autores;
+	}
+	
+	public void setAutores(ArrayList<Autor> autores) {
+		this.autores = autores;
+	}
 	
 	public Entidade getEntidadeLinha() {
 		return entidadeLinha;
@@ -36,14 +48,6 @@ public class Linha implements Serializable {
 
 	public void setIdLinha(int idLinha) {
 		this.idLinha = idLinha;
-	}
-
-	public Autor getAutorLinha() {
-		return autorLinha;
-	}
-
-	public void setAutorLinha(Autor autorLinha) {
-		this.autorLinha = autorLinha;
 	}
 
 	public Editora getEditoraLinha() {
