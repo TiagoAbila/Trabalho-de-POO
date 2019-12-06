@@ -1,6 +1,8 @@
 package Model;
 
-public class Linha {
+import java.io.Serializable;
+
+public class Linha implements Serializable {
 	private Autor autorLinha;
 	private Editora editoraLinha;
 	private LocalPublicacao localPubliLinha;

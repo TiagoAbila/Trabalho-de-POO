@@ -1,6 +1,8 @@
 package Model;
 
-public class TipoMaterial {
+import java.io.Serializable;
+
+public class TipoMaterial implements Serializable {
 	private String tipoMaterial;
 
 	public TipoMaterial(String tipoMaterial) {

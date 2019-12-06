@@ -1,6 +1,8 @@
 package Model;
 
-public class Entidade {
+import java.io.Serializable;
+
+public class Entidade implements Serializable {
 	private String entidade;
 	private String tipo;
 	

@@ -1,6 +1,8 @@
 package Model;
 
-public class TipoDivulgacao {
+import java.io.Serializable;
+
+public class TipoDivulgacao implements Serializable {
 
 	private String TipoDivulgacao;
 
