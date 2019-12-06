@@ -1,6 +1,7 @@
 package Controller;
 //
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -56,11 +57,6 @@ public class Conexao {
 			String nr_isbn,
 			String nr_issn
 			) throws SQLException {
-		String cd_editora = null;
-		String cd_entidade = null;
-		String cd_local_publicacao = null;
-		String tp_material = null;
-		String tp_divulgacao = null;
 		
 		query = conexao.createStatement();
 		query.execute( 
@@ -100,6 +96,48 @@ public class Conexao {
 		for (int i = 0; i < ds_palavra_chave.length; i++) {
 			query.execute("insert into palavra_chave (ds_palavra_chave) values ('"+ds_palavra_chave[i]+"');");
 		}
+	}
+	
+	public ArrayList<Integer> getIndexAutores( String[] nm_autor) throws SQLException {
+		query  = conexao.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+		ResultSet result;
+		ArrayList<Integer> saida = new ArrayList<Integer>();
+		for (int i = 0; i < nm_autor.length; i++) {
+			result = query.executeQuery(
+					"Select cd_autor from autor where nm_autor like '" + nm_autor[i] + "';");
+			System.out.print(result.toString());
+			if (!result.first()) {
+				query.execute("Insert into autor (nm_autor) values ('" + nm_autor[i] + "');");
+				result = query.executeQuery(
+						"Select cd_autor from autor where nm_autor like '" + nm_autor[i] + "';");
+				result.first();
+				saida.add(result.getInt(1));
+			} else {
+				saida.add(result.getInt(1));
+			}
+		}
+		return saida ;
+	}
+	
+	public ArrayList<Integer> getIndexPalavrasChave( String[] ds_paravra_chave) throws SQLException {
+		query  = conexao.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+		ResultSet result;
+		ArrayList<Integer> saida = new ArrayList<Integer>();
+		for (int i = 0; i < ds_paravra_chave.length; i++) {
+			result = query.executeQuery(
+					"Select cd_paravra_chave from paravra_chave where ds_paravra_chave like '" + ds_paravra_chave[i] + "';");
+			System.out.print(result.toString());
+			if (!result.first()) {
+				query.execute("Insert into paravra_chave (ds_paravra_chave) values ('" + ds_paravra_chave[i] + "');");
+				result = query.executeQuery(
+						"Select cd_paravra_chave from paravra_chave where ds_paravra_chave like '" + ds_paravra_chave[i] + "';");
+				result.first();
+				saida.add(result.getInt(1));
+			} else {
+				saida.add(result.getInt(1));
+			}
+		}
+		return saida ;
 	}
 	
 	public int getIndexMaterial( String ds_material ) throws SQLException {
