@@ -18,7 +18,7 @@ class Testes {
 		Conexao teca = new Conexao();
 		try {
 			teca.setConnection("teca", "postgres", "102030");
-			teca.getIndexMaterial("sua mae");
+			System.out.println( "Souza:" + teca.getIndexLocalPublicacao("Souza Cruz") );
 		} catch (SQLException sqle) {
 			JOptionPane.showMessageDialog(null, sqle.getClass() + "\n" + sqle.getMessage(), null,
 					JOptionPane.ERROR_MESSAGE);

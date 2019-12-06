@@ -63,11 +63,7 @@ public class Conexao {
 		String tp_divulgacao = null;
 		
 		query = conexao.createStatement();
-		query.execute(
-				"insert into tipo_divulgacao (ds_divulgacao) values ('"+ds_divulgacao+"');\r\n" + 
-				"insert into entidade (nm_entidade, tp_entidade) values ('"+nm_entidade+"', '"+tp_entidade+"');\r\n" + 
-				"insert into local_publicacao (nm_local_publicacao) values ('"+nm_local_publicacao+"');\r\n" + 
-				"insert into editora (nm_editora) values ('"+nm_editora+"');\r\n" + 
+		query.execute( 
 				"insert into material (\r\n" + 
 				"	cd_editora,\r\n" + 
 				"	cd_entidade,\r\n" + 
@@ -83,11 +79,11 @@ public class Conexao {
 				"	nr_isbn,\r\n" + 
 				"	nr_issn\r\n" + 
 				") values (\r\n" + 
-				"	"+cd_editora+",\r\n" + // Sera substituido por select
-				"	"+cd_entidade+",\r\n" + // Sera substituido por select
-				"	"+cd_local_publicacao+",\r\n" + // Sera substituido por select
-				"	"+getIndexMaterial(ds_material)+",\r\n" + 
-				"	"+tp_divulgacao+",\r\n" + // Sera substituido por select
+				"	"+getIndexEditora(nm_editora)+",\r\n" +
+				"	"+getIndexEntidade(nm_entidade, tp_entidade)+",\r\n" +
+				"	"+getIndexLocalPublicacao(nm_local_publicacao)+",\r\n" +
+				"	"+getIndexMaterial(ds_material)+",\r\n" +
+				"	"+getIndexDivulgacao(ds_divulgacao)+",\r\n" +
 				"	'"+nm_titulo+"',\r\n" + 
 				"	'"+ds_ano_producao+"',\r\n" + 
 				"	'"+ds_ano_publicacao+"',\r\n" + 
@@ -121,5 +117,64 @@ public class Conexao {
  		}
 	}
 	
+	public int getIndexDivulgacao( String ds_divulgacao ) throws SQLException {
+		query  = conexao.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+		ResultSet result;
+		result = query.executeQuery("Select tp_divulgacao from tipo_divulgacao where ds_divulgacao like '"+ds_divulgacao+"';");
+		System.out.print(result.toString());
+		if (  !result.first() ) {
+			query.execute("Insert into tipo_divulgacao (ds_divulgacao) values ('"+ds_divulgacao+"');");
+			result = query.executeQuery("Select tp_divulgacao from tipo_divulgacao where ds_divulgacao like '"+ds_divulgacao+"';");
+			result.first();
+			return result.getInt(1);
+ 		} else {
+ 			return result.getInt(1);
+ 		}
+	}
+	
+	public int getIndexEntidade( String nm_entidade, String tp_entidade ) throws SQLException {
+		query  = conexao.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+		ResultSet result;
+		result = query.executeQuery("Select cd_entidade from entidade where nm_entidade like '"+nm_entidade+"' and tp_entidade like '"+tp_entidade+"';");
+		System.out.print(result.toString());
+		if (  !result.first() ) {
+			query.execute("Insert into entidade (nm_entidade, tp_entidade) values ('"+nm_entidade+"', '"+tp_entidade+"');");
+			result = query.executeQuery("Select cd_entidade from entidade where nm_entidade like '"+nm_entidade+"' and tp_entidade like '"+tp_entidade+"';");
+			result.first();
+			return result.getInt(1);
+ 		} else {
+ 			return result.getInt(1);
+ 		}
+	}
+	
+	public int getIndexLocalPublicacao( String nm_local_publicacao ) throws SQLException {
+		query  = conexao.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+		ResultSet result;
+		result = query.executeQuery("Select cd_local_publicacao from local_publicacao where nm_local_publicacao like '"+nm_local_publicacao+"';");
+		System.out.print(result.toString());
+		if (  !result.first() ) {
+			query.execute("Insert into local_publicacao (nm_local_publicacao) values ('"+nm_local_publicacao+"');");
+			result = query.executeQuery("Select cd_local_publicacao from local_publicacao where nm_local_publicacao like '"+nm_local_publicacao+"';");
+			result.first();
+			return result.getInt(1);
+ 		} else {
+ 			return result.getInt(1);
+ 		}
+	}
+	
+	public int getIndexEditora( String nm_editora ) throws SQLException {
+		query  = conexao.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+		ResultSet result;
+		result = query.executeQuery("Select cd_editora from editora where nm_editora like '"+nm_editora+"';");
+		System.out.print(result.toString());
+		if (  !result.first() ) {
+			query.execute("Insert into editora (nm_editora) values ('"+nm_editora+"');");
+			result = query.executeQuery("Select cd_editora from editora where nm_editora like '"+nm_editora+"';");
+			result.first();
+			return result.getInt(1);
+ 		} else {
+ 			return result.getInt(1);
+ 		}
+	}
 	
 }
