@@ -64,7 +64,6 @@ public class Conexao {
 		
 		query = conexao.createStatement();
 		query.execute(
-				"insert into tipo_material (ds_material) values ('"+ds_material+"');\r\n" + 
 				"insert into tipo_divulgacao (ds_divulgacao) values ('"+ds_divulgacao+"');\r\n" + 
 				"insert into entidade (nm_entidade, tp_entidade) values ('"+nm_entidade+"', '"+tp_entidade+"');\r\n" + 
 				"insert into local_publicacao (nm_local_publicacao) values ('"+nm_local_publicacao+"');\r\n" + 
