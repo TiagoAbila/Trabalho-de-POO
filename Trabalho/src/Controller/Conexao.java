@@ -64,7 +64,6 @@ public class Conexao {
 		
 		query = conexao.createStatement();
 		query.execute(
-				"insert into tipo_material (ds_material) values ('"+ds_material+"');\r\n" + 
 				"insert into tipo_divulgacao (ds_divulgacao) values ('"+ds_divulgacao+"');\r\n" + 
 				"insert into entidade (nm_entidade, tp_entidade) values ('"+nm_entidade+"', '"+tp_entidade+"');\r\n" + 
 				"insert into local_publicacao (nm_local_publicacao) values ('"+nm_local_publicacao+"');\r\n" + 
@@ -108,12 +107,11 @@ public class Conexao {
 	}
 	
 	public int getIndexMaterial( String ds_material ) throws SQLException {
-		query  = conexao.createStatement();
+		query  = conexao.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 		ResultSet result;
 		result = query.executeQuery("Select tp_material from tipo_material where ds_material like '"+ds_material+"';");
-		result.first();
-		result.getInt(1);
-		if (  result.wasNull() ) {
+		System.out.print(result.toString());
+		if (  !result.first() ) {
 			query.execute("Insert into tipo_material (ds_material) values ('"+ds_material+"');");
 			result = query.executeQuery("Select tp_material from tipo_material where ds_material like '"+ds_material+"';");
 			result.first();
@@ -121,6 +119,7 @@ public class Conexao {
  		} else {
  			return result.getInt(1);
  		}
-	} 
+	}
+	
 	
 }
