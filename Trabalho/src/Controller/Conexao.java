@@ -23,21 +23,6 @@ public class Conexao {
 		query.execute("INSERT INTO autor (cd_autor, nm_autor) values (" + pk + ", '" + nome + "')");
 		query.close();
 	}
-
-	/* Teste Select */
-	public void selectQuery() throws SQLException {
-		query = conexao.createStatement();
-		ResultSet result;
-		result = query.executeQuery("Select * from autor");
-		while (result.next()) {
-			int id = result.getInt(1);
-			String nome = result.getString(2);
-			System.out.println("ID = " + id);
-			System.out.println("Nome = " + nome);
-		}
-		result.close();
-		query.close();
-	}
 	
 	public void insertIntoDB(
 			String ds_material,
