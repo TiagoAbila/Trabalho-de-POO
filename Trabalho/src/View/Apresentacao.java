@@ -13,6 +13,7 @@ import org.postgresql.*;
 
 import Controller.Conexao;
 import Controller.Leitura;
+import Controller.Persistencia;
 import Model.*;
 
 import javax.swing.JFileChooser;
@@ -32,7 +33,7 @@ import java.awt.Font;
 public class Apresentacao extends JFrame {	
 	private JPanel contentPane;
 	private File arquivoTrabalhado;
-	
+	private Leitura leitor;
 	
 	public File getArquivoTrabalhado() {
 		return arquivoTrabalhado;
@@ -42,11 +43,13 @@ public class Apresentacao extends JFrame {
 		this.arquivoTrabalhado = arquivoTrabalhado;
 	}
 	
-	
+	public Apresentacao(Leitura leitura) {
+		leitor = leitura;
+	}
 
 	public Apresentacao(File arq) throws IOException {
 		this.setArquivoTrabalhado(arq);
-		Leitura leitor = new Leitura(arq);
+		leitor = new Leitura(arq);
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 800, 536);
@@ -221,6 +224,16 @@ public class Apresentacao extends JFrame {
 		JComboBox cbTipoMaterialTarget = new JComboBox();
 		cbTipoMaterialTarget.setBounds(198, 162, 431, 20);
 		panelTipoMaterial.add(cbTipoMaterialTarget);
+		
+		JButton btnSalvar = new JButton("Salvar");
+		btnSalvar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				Persistencia p = new Persistencia();
+				p.GravarObjetos(leitor);
+			}
+		});
+		btnSalvar.setBounds(672, 462, 89, 23);
+		contentPane.add(btnSalvar);
 		
 		for (TipoMaterial objeto: leitor.getTiposDeMaterial()) {
 			cbTipoMaterialTarget.addItem(objeto);			
