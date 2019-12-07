@@ -10,6 +10,9 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.filechooser.FileFilter;
 
 import Controller.Conexao;
+import Controller.Leitura;
+import Controller.Persistencia;
+
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 
@@ -45,20 +48,6 @@ public class Inicio extends JFrame {
 		Conexao teca = new Conexao();
 		try {
 			teca.setConnection("TECA", "postgres", "102030");
-		} catch (SQLException sqle) {
-			JOptionPane.showMessageDialog(null, sqle.getClass() + "\n" + sqle.getMessage(), null,
-					JOptionPane.ERROR_MESSAGE);
-		}
-		// Testes
-		try {
-			teca.insertQuery(1, "teste");
-		} catch (SQLException sqle) {
-			JOptionPane.showMessageDialog(null, sqle.getClass() + "\n" + sqle.getMessage(), null,
-					JOptionPane.ERROR_MESSAGE);
-		}
-
-		try {
-			teca.selectQuery();
 		} catch (SQLException sqle) {
 			JOptionPane.showMessageDialog(null, sqle.getClass() + "\n" + sqle.getMessage(), null,
 					JOptionPane.ERROR_MESSAGE);
@@ -101,23 +90,8 @@ public class Inicio extends JFrame {
 		JButton btnExiste = new JButton("Continuar");
 		btnExiste.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				File file;
-				JFileChooser jfc = new JFileChooser("C:\\Users\\Pedro\\Desktop\\teste");
-				int retorno = jfc.showOpenDialog(null);
-				if (retorno == JFileChooser.APPROVE_OPTION) {
-					file = jfc.getSelectedFile();
-					EventQueue.invokeLater(new Runnable() {
-						public void run() {
-							try {
-								Apresentacao frame = new Apresentacao(file);
-								frame.setArquivoTrabalhado(file);
-								frame.setVisible(true);							
-							} catch (Exception e) {
-								e.printStackTrace();
-							}
-						}
-					});
-				}
+				Persistencia p = new Persistencia();
+				Leitura l = p.BuscarObjetos();
 			}
 		});
 		btnExiste.setBounds(342, 58, 114, 23);
