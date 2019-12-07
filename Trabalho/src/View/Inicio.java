@@ -92,6 +92,8 @@ public class Inicio extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				Persistencia p = new Persistencia();
 				Leitura l = p.BuscarObjetos();
+				Apresentacao a = new Apresentacao(l);
+				a.setVisible(true);
 			}
 		});
 		btnExiste.setBounds(342, 58, 114, 23);

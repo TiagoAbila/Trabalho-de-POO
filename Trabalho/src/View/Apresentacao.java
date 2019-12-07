@@ -45,12 +45,16 @@ public class Apresentacao extends JFrame {
 	
 	public Apresentacao(Leitura leitura) {
 		leitor = leitura;
+		MontaPagina();
 	}
 
 	public Apresentacao(File arq) throws IOException {
 		this.setArquivoTrabalhado(arq);
 		leitor = new Leitura(arq);
-		
+		MontaPagina();
+	}
+	
+	public void MontaPagina() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 800, 536);
 		contentPane = new JPanel();
