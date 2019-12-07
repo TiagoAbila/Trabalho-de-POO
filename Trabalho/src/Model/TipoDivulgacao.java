@@ -17,5 +17,9 @@ public class TipoDivulgacao implements Serializable {
 	public void setTipoDivulgacao(String tipoDivulgacao) {
 		TipoDivulgacao = tipoDivulgacao;
 	}
-
+		
+	@Override
+	public String toString() {
+		return  TipoDivulgacao;
+	}
 }

@@ -17,4 +17,9 @@ public class Autor implements Serializable {
 	public void setAutor(String autor) {
 		this.autor = autor;
 	}
+	
+	@Override
+	public String toString() {
+		return  autor;
+	}
 }

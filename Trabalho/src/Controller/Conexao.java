@@ -44,8 +44,8 @@ public class Conexao {
 			String ds_divulgacao,
 			String nm_entidade,
 			String tp_entidade, // Governamental ou ñ
-			String[] nm_autor, // Por hora não vincula na tabela n para n
-			String[] ds_palavra_chave, // Por hora não vincula na tabela n para n
+			String[] nm_autor,
+			String[] ds_palavra_chave, 
 			String nm_local_publicacao,
 			String nm_editora,
 			String nm_titulo,
@@ -90,11 +90,39 @@ public class Conexao {
 				"	"+nr_issn+"\r\n" + 
 				");"
 				);
-		for (int i = 0; i < nm_autor.length; i++) {
-			query.execute("insert into autor (nm_autor) values ('"+nm_autor[i]+"');");
+				bindAutores( getIndexAutores( nm_autor ) );
+				bindPalavraChave( getIndexPalavrasChave( ds_palavra_chave ) );
+		query.close();
+				
+	}
+	
+	public void bindAutores( ArrayList<Integer> cd_autor ) throws SQLException {
+		query  = conexao.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+		ResultSet result;
+		result = query.executeQuery("select max(cd_material) from material;");
+		result.first();
+		int cd_material =  result.getInt(1);
+		for (int i = 0; i < cd_autor.size(); i++) {
+			result = query.executeQuery(
+					"Select cd_autor, cd_material from material_autor where cd_material like '"+cd_material+"' and cd_autor like '"+cd_autor.get(i)+"';");
+			if ( !result.first() ) {
+				query.execute("Insert into material_autor (cd_material, cd_autor) values ('"+cd_material+"', '"+cd_autor.get(i)+"');");
+			} 		
 		}
-		for (int i = 0; i < ds_palavra_chave.length; i++) {
-			query.execute("insert into palavra_chave (ds_palavra_chave) values ('"+ds_palavra_chave[i]+"');");
+	}
+	
+	public void bindPalavraChave( ArrayList<Integer> cd_palavra_chave ) throws SQLException {
+		query  = conexao.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+		ResultSet result;
+		result = query.executeQuery("select max(cd_material) from material;");
+		result.first();
+		int cd_material =  result.getInt(1);
+		for (int i = 0; i < cd_palavra_chave.size(); i++) {
+			result = query.executeQuery(
+					"Select cd_palavra_chave, cd_material from material_palavra_chave where cd_material like '"+cd_material+"' and cd_palavra_chave like '"+cd_palavra_chave.get(i)+"';");
+			if ( !result.first() ) {
+				query.execute("Insert into material_palavra_chave (cd_material, cd_palavra_chave) values ('"+cd_material+"', '"+cd_palavra_chave.get(i)+"');");
+			} 		
 		}
 	}
 	
@@ -105,7 +133,7 @@ public class Conexao {
 		for (int i = 0; i < nm_autor.length; i++) {
 			result = query.executeQuery(
 					"Select cd_autor from autor where nm_autor like '" + nm_autor[i] + "';");
-			System.out.print(result.toString());
+			
 			if (!result.first()) {
 				query.execute("Insert into autor (nm_autor) values ('" + nm_autor[i] + "');");
 				result = query.executeQuery(
@@ -119,18 +147,18 @@ public class Conexao {
 		return saida ;
 	}
 	
-	public ArrayList<Integer> getIndexPalavrasChave( String[] ds_paravra_chave) throws SQLException {
+	public ArrayList<Integer> getIndexPalavrasChave( String[] ds_palavra_chave) throws SQLException {
 		query  = conexao.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 		ResultSet result;
 		ArrayList<Integer> saida = new ArrayList<Integer>();
-		for (int i = 0; i < ds_paravra_chave.length; i++) {
+		for (int i = 0; i < ds_palavra_chave.length; i++) {
 			result = query.executeQuery(
-					"Select cd_paravra_chave from paravra_chave where ds_paravra_chave like '" + ds_paravra_chave[i] + "';");
-			System.out.print(result.toString());
+					"Select cd_palavra_chave from palavra_chave where ds_palavra_chave like '" + ds_palavra_chave[i] + "';");
+			
 			if (!result.first()) {
-				query.execute("Insert into paravra_chave (ds_paravra_chave) values ('" + ds_paravra_chave[i] + "');");
+				query.execute("Insert into palavra_chave (ds_palavra_chave) values ('" + ds_palavra_chave[i] + "');");
 				result = query.executeQuery(
-						"Select cd_paravra_chave from paravra_chave where ds_paravra_chave like '" + ds_paravra_chave[i] + "';");
+						"Select cd_palavra_chave from palavra_chave where ds_palavra_chave like '" + ds_palavra_chave[i] + "';");
 				result.first();
 				saida.add(result.getInt(1));
 			} else {
@@ -144,7 +172,7 @@ public class Conexao {
 		query  = conexao.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 		ResultSet result;
 		result = query.executeQuery("Select tp_material from tipo_material where ds_material like '"+ds_material+"';");
-		System.out.print(result.toString());
+		
 		if (  !result.first() ) {
 			query.execute("Insert into tipo_material (ds_material) values ('"+ds_material+"');");
 			result = query.executeQuery("Select tp_material from tipo_material where ds_material like '"+ds_material+"';");
@@ -159,7 +187,7 @@ public class Conexao {
 		query  = conexao.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 		ResultSet result;
 		result = query.executeQuery("Select tp_divulgacao from tipo_divulgacao where ds_divulgacao like '"+ds_divulgacao+"';");
-		System.out.print(result.toString());
+		
 		if (  !result.first() ) {
 			query.execute("Insert into tipo_divulgacao (ds_divulgacao) values ('"+ds_divulgacao+"');");
 			result = query.executeQuery("Select tp_divulgacao from tipo_divulgacao where ds_divulgacao like '"+ds_divulgacao+"';");
@@ -174,7 +202,7 @@ public class Conexao {
 		query  = conexao.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 		ResultSet result;
 		result = query.executeQuery("Select cd_entidade from entidade where nm_entidade like '"+nm_entidade+"' and tp_entidade like '"+tp_entidade+"';");
-		System.out.print(result.toString());
+		
 		if (  !result.first() ) {
 			query.execute("Insert into entidade (nm_entidade, tp_entidade) values ('"+nm_entidade+"', '"+tp_entidade+"');");
 			result = query.executeQuery("Select cd_entidade from entidade where nm_entidade like '"+nm_entidade+"' and tp_entidade like '"+tp_entidade+"';");
@@ -189,7 +217,7 @@ public class Conexao {
 		query  = conexao.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 		ResultSet result;
 		result = query.executeQuery("Select cd_local_publicacao from local_publicacao where nm_local_publicacao like '"+nm_local_publicacao+"';");
-		System.out.print(result.toString());
+		
 		if (  !result.first() ) {
 			query.execute("Insert into local_publicacao (nm_local_publicacao) values ('"+nm_local_publicacao+"');");
 			result = query.executeQuery("Select cd_local_publicacao from local_publicacao where nm_local_publicacao like '"+nm_local_publicacao+"';");
@@ -204,7 +232,7 @@ public class Conexao {
 		query  = conexao.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 		ResultSet result;
 		result = query.executeQuery("Select cd_editora from editora where nm_editora like '"+nm_editora+"';");
-		System.out.print(result.toString());
+		
 		if (  !result.first() ) {
 			query.execute("Insert into editora (nm_editora) values ('"+nm_editora+"');");
 			result = query.executeQuery("Select cd_editora from editora where nm_editora like '"+nm_editora+"';");

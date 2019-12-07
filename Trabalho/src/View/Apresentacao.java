@@ -13,6 +13,7 @@ import org.postgresql.*;
 
 import Controller.Conexao;
 import Controller.Leitura;
+import Model.*;
 
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
@@ -45,7 +46,7 @@ public class Apresentacao extends JFrame {
 
 	public Apresentacao(File arq) throws IOException {
 		this.setArquivoTrabalhado(arq);
-		Leitura contrador = new Leitura(arq);
+		Leitura leitor = new Leitura(arq);
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 800, 536);
@@ -58,89 +59,6 @@ public class Apresentacao extends JFrame {
 		tabbedPane.setBounds(10, 11, 764, 440);
 		contentPane.add(tabbedPane);
 		
-		JPanel panelTipo = new JPanel();
-		tabbedPane.addTab("Tipo de Material", null, panelTipo, null);
-		panelTipo.setLayout(null);
-		
-		JTextPane textPane = new JTextPane();
-		textPane.setBounds(10, 11, 739, 351);
-		panelTipo.add(textPane);		
-		
-		JPanel panelMeioDiv = new JPanel();
-		tabbedPane.addTab("Meio de Divulga\u00E7\u00E3o", null, panelMeioDiv, null);
-		panelMeioDiv.setLayout(null);
-		
-		JComboBox cbMeioDivulgaçãoSource = new JComboBox();
-		cbMeioDivulgaçãoSource.setBounds(113, 35, 431, 20);
-		panelMeioDiv.add(cbMeioDivulgaçãoSource);
-		/*
-		for (int i = 0; i < array.length; i++) {
-			cbMeioDivulgaçãoSource.addItem();			
-		}*/
-		
-		JComboBox cbMeioDivulgaçãoTarget = new JComboBox();
-		cbMeioDivulgaçãoTarget.setBounds(124, 172, 431, 20);
-		panelMeioDiv.add(cbMeioDivulgaçãoTarget);
-		/*
-		for (int i = 0; i < array.length; i++) {
-			cbMeioDivulgaçãoTarget.addItem();			
-		}*/
-		
-		JLabel lblEquivaleA = new JLabel("Equivale a");
-		lblEquivaleA.setFont(new Font("Tahoma", Font.PLAIN, 19));
-		lblEquivaleA.setBounds(293, 91, 96, 38);
-		panelMeioDiv.add(lblEquivaleA);
-		
-		JPanel panelEntidade = new JPanel();
-		tabbedPane.addTab("Entidade", null, panelEntidade, null);
-		panelEntidade.setLayout(null);
-		
-		JComboBox cbEntidadeSource = new JComboBox();
-		cbEntidadeSource.setBounds(190, 42, 312, 20);
-		panelEntidade.add(cbEntidadeSource);
-		/*
-		for (int i = 0; i < array.length; i++) {
-			cbEntidadeSource.addItem();			
-		}*/
-		
-		JLabel label = new JLabel("Equivale a");
-		label.setBounds(296, 101, 86, 23);
-		label.setFont(new Font("Tahoma", Font.PLAIN, 19));
-		panelEntidade.add(label);
-		
-		JComboBox cbEntidadeTarget = new JComboBox();
-		cbEntidadeTarget.setBounds(190, 167, 312, 20);
-		panelEntidade.add(cbEntidadeTarget);
-		/*
-		for (int i = 0; i < array.length; i++) {
-			cbEntidadeTarget.addItem();			
-		}*/
-		
-		JPanel panelOrganizacao = new JPanel();
-		tabbedPane.addTab("Organiza\u00E7\u00E3o", null, panelOrganizacao, null);
-		panelOrganizacao.setLayout(null);
-		
-		JComboBox cbOrganizacaoSource = new JComboBox();
-		cbOrganizacaoSource.setBounds(138, 45, 431, 20);
-		panelOrganizacao.add(cbOrganizacaoSource);
-		/*
-		for (int i = 0; i < array.length; i++) {
-			cbOrganizacaoSource.addItem();			
-		}*/
-		
-		JLabel label_1 = new JLabel("Equivale a");
-		label_1.setFont(new Font("Tahoma", Font.PLAIN, 19));
-		label_1.setBounds(307, 103, 96, 38);
-		panelOrganizacao.add(label_1);
-		
-		JComboBox cbOrganizacaoTarget = new JComboBox();
-		cbOrganizacaoTarget.setBounds(138, 184, 431, 20);
-		panelOrganizacao.add(cbOrganizacaoTarget);
-		/*
-		for (int i = 0; i < array.length; i++) {
-			cbOrganizacaoTarget.addItem();			
-		}*/
-		
 		JPanel panelAutor = new JPanel();
 		tabbedPane.addTab("Autor", null, panelAutor, null);
 		panelAutor.setLayout(null);
@@ -148,10 +66,6 @@ public class Apresentacao extends JFrame {
 		JComboBox cbAutorSource = new JComboBox();
 		cbAutorSource.setBounds(133, 56, 431, 20);
 		panelAutor.add(cbAutorSource);
-		/*
-		for (int i = 0; i < array.length; i++) {
-			cbAutorSource.addItem();			
-		}*/
 		
 		JLabel label_2 = new JLabel("Equivale a");
 		label_2.setFont(new Font("Tahoma", Font.PLAIN, 19));
@@ -161,35 +75,6 @@ public class Apresentacao extends JFrame {
 		JComboBox cbAutorTarget = new JComboBox();
 		cbAutorTarget.setBounds(133, 195, 431, 20);
 		panelAutor.add(cbAutorTarget);
-		/*
-		for (int i = 0; i < array.length; i++) {
-			cbAutorTarget.addItem();			
-		}*/
-		
-		JPanel panelLocal = new JPanel();
-		tabbedPane.addTab("Local de Publica\u00E7\u00E3o", null, panelLocal, null);
-		panelLocal.setLayout(null);
-		
-		JComboBox cbLocalSource = new JComboBox();
-		cbLocalSource.setBounds(131, 43, 431, 20);
-		panelLocal.add(cbLocalSource);
-		/*
-		for (int i = 0; i < array.length; i++) {
-			cbLocalSource.addItem();			
-		}*/
-		
-		JLabel label_3 = new JLabel("Equivale a");
-		label_3.setFont(new Font("Tahoma", Font.PLAIN, 19));
-		label_3.setBounds(300, 101, 96, 38);
-		panelLocal.add(label_3);
-		
-		JComboBox cbLocalTarget = new JComboBox();
-		cbLocalTarget.setBounds(131, 182, 431, 20);
-		panelLocal.add(cbLocalTarget);
-		/*
-		for (int i = 0; i < array.length; i++) {
-			cbLocalTarget.addItem();			
-		}*/
 		
 		JPanel panelEditora = new JPanel();
 		tabbedPane.addTab("Editora", null, panelEditora, null);
@@ -198,10 +83,6 @@ public class Apresentacao extends JFrame {
 		JComboBox cbEditoraSource = new JComboBox();
 		cbEditoraSource.setBounds(129, 65, 431, 20);
 		panelEditora.add(cbEditoraSource);
-		/*
-		for (int i = 0; i < array.length; i++) {
-			cbEditoraSource.addItem();			
-		}*/
 		
 		JLabel label_4 = new JLabel("Equivale a");
 		label_4.setFont(new Font("Tahoma", Font.PLAIN, 19));
@@ -211,36 +92,61 @@ public class Apresentacao extends JFrame {
 		JComboBox cbEditoraTarget = new JComboBox();
 		cbEditoraTarget.setBounds(129, 204, 431, 20);
 		panelEditora.add(cbEditoraTarget);
-		/*
-		for (int i = 0; i < array.length; i++) {
-			cbEditoraTarget.addItem();			
-		}*/
 		
-		JPanel cbIssnSource = new JPanel();
-		tabbedPane.addTab("ISSN", null, cbIssnSource, null);
-		cbIssnSource.setLayout(null);
-		/*
-		for (int i = 0; i < array.length; i++) {
-			cbIssnSource.addItem();			
-		}*/
+		JPanel panelEntidade = new JPanel();
+		tabbedPane.addTab("Entidade", null, panelEntidade, null);
+		panelEntidade.setLayout(null);
 		
-		JComboBox comboBox_10 = new JComboBox();
-		comboBox_10.setBounds(129, 56, 431, 20);
-		cbIssnSource.add(comboBox_10);
+		JComboBox cbEntidadeSource = new JComboBox();
+		cbEntidadeSource.setBounds(190, 42, 312, 20);
+		panelEntidade.add(cbEntidadeSource);
 		
+		JLabel label = new JLabel("Equivale a");
+		label.setBounds(296, 101, 86, 23);
+		label.setFont(new Font("Tahoma", Font.PLAIN, 19));
+		panelEntidade.add(label);
+		
+		JComboBox cbEntidadeTarget = new JComboBox();
+		cbEntidadeTarget.setBounds(190, 167, 312, 20);
+		panelEntidade.add(cbEntidadeTarget);
+		
+		JComboBox comboBox = new JComboBox();
+		comboBox.setBounds(148, 217, 431, 20);
+		panelEntidade.add(comboBox);
 		
 		JLabel label_5 = new JLabel("Equivale a");
 		label_5.setFont(new Font("Tahoma", Font.PLAIN, 19));
-		label_5.setBounds(298, 114, 96, 38);
-		cbIssnSource.add(label_5);
+		label_5.setBounds(317, 275, 96, 38);
+		panelEntidade.add(label_5);
 		
-		JComboBox cbIssnTarget = new JComboBox();
-		cbIssnTarget.setBounds(129, 195, 431, 20);
-		cbIssnSource.add(cbIssnTarget);
-		/*
-		for (int i = 0; i < array.length; i++) {
-			cbIssnTarget.addItem();			
-		}*/
+		JComboBox comboBox_1 = new JComboBox();
+		comboBox_1.setBounds(148, 356, 431, 20);
+		panelEntidade.add(comboBox_1);
+		
+		JLabel lblEntidade = new JLabel("Entidade");
+		lblEntidade.setBounds(62, 109, 46, 14);
+		panelEntidade.add(lblEntidade);
+		
+		JLabel lblIssn = new JLabel("ISSN");
+		lblIssn.setBounds(62, 291, 46, 14);
+		panelEntidade.add(lblIssn);
+		
+		JPanel panelLocal = new JPanel();
+		tabbedPane.addTab("Local de Publica\u00E7\u00E3o", null, panelLocal, null);
+		panelLocal.setLayout(null);
+		
+		JComboBox cbLocalSource = new JComboBox();
+		cbLocalSource.setBounds(131, 43, 431, 20);
+		panelLocal.add(cbLocalSource);
+		
+		JLabel label_3 = new JLabel("Equivale a");
+		label_3.setFont(new Font("Tahoma", Font.PLAIN, 19));
+		label_3.setBounds(300, 101, 96, 38);
+		panelLocal.add(label_3);
+		
+		JComboBox cbLocalTarget = new JComboBox();
+		cbLocalTarget.setBounds(131, 182, 431, 20);
+		panelLocal.add(cbLocalTarget);
 		
 		
 		JPanel panelPalChave = new JPanel();
@@ -251,10 +157,6 @@ public class Apresentacao extends JFrame {
 		JComboBox cbPalChaveSource = new JComboBox();
 		cbPalChaveSource.setBounds(140, 63, 431, 20);
 		panelPalChave.add(cbPalChaveSource);
-		/*
-		for (int i = 0; i < array.length; i++) {
-			cbPalChaveSource.addItem();			
-		}*/
 		
 		JLabel label_6 = new JLabel("Equivale a");
 		label_6.setFont(new Font("Tahoma", Font.PLAIN, 19));
@@ -264,9 +166,101 @@ public class Apresentacao extends JFrame {
 		JComboBox cbPalChaveTarget = new JComboBox();
 		cbPalChaveTarget.setBounds(140, 202, 431, 20);
 		panelPalChave.add(cbPalChaveTarget);
-		/*
-		for (int i = 0; i < array.length; i++) {
-			cbPalChaveTarget.addItem();			
-		}*/
+		
+		JPanel panelMeioDiv = new JPanel();
+		tabbedPane.addTab("Meio de Divulga\u00E7\u00E3o", null, panelMeioDiv, null);
+		panelMeioDiv.setLayout(null);
+		
+		JComboBox cbMeioDivulgaçãoSource = new JComboBox();
+		cbMeioDivulgaçãoSource.setBounds(212, 31, 431, 20);
+		panelMeioDiv.add(cbMeioDivulgaçãoSource);
+		for (TipoDivulgacao objeto: leitor.getTiposDeDivulgacao()) {
+			cbMeioDivulgaçãoSource.addItem(objeto);			
+		}
+		
+		JComboBox cbMeioDivulgaçãoTarget = new JComboBox();
+		cbMeioDivulgaçãoTarget.setBounds(212, 163, 431, 20);
+		panelMeioDiv.add(cbMeioDivulgaçãoTarget);
+		for (TipoDivulgacao objeto: leitor.getTiposDeDivulgacao()) {
+			cbMeioDivulgaçãoTarget.addItem(objeto);			
+		}
+		
+		JLabel lblEquivaleA = new JLabel("Equivale a");
+		lblEquivaleA.setFont(new Font("Tahoma", Font.PLAIN, 19));
+		lblEquivaleA.setBounds(293, 91, 96, 38);
+		panelMeioDiv.add(lblEquivaleA);
+		
+		JLabel lblSource = new JLabel("Source");
+		lblSource.setFont(new Font("Tahoma", Font.PLAIN, 17));
+		lblSource.setBounds(104, 31, 66, 14);
+		panelMeioDiv.add(lblSource);
+		
+		JLabel lblTarget = new JLabel("Target");
+		lblTarget.setFont(new Font("Tahoma", Font.PLAIN, 17));
+		lblTarget.setBounds(104, 163, 63, 20);
+		panelMeioDiv.add(lblTarget);
+		
+		JPanel panelTipoMaterial = new JPanel();
+		tabbedPane.addTab("Tipo de Material", null, panelTipoMaterial, null);
+		panelTipoMaterial.setLayout(null);
+		
+		JLabel label_1 = new JLabel("Source");
+		label_1.setFont(new Font("Tahoma", Font.PLAIN, 17));
+		label_1.setBounds(90, 30, 66, 14);
+		panelTipoMaterial.add(label_1);
+		
+		JComboBox cbTipoMaterialSource = new JComboBox();
+		cbTipoMaterialSource.setBounds(198, 30, 431, 20);
+		panelTipoMaterial.add(cbTipoMaterialSource);
+		
+		JLabel label_7 = new JLabel("Target");
+		label_7.setFont(new Font("Tahoma", Font.PLAIN, 17));
+		label_7.setBounds(90, 162, 63, 20);
+		panelTipoMaterial.add(label_7);
+		
+		JComboBox cbTipoMaterialTarget = new JComboBox();
+		cbTipoMaterialTarget.setBounds(198, 162, 431, 20);
+		panelTipoMaterial.add(cbTipoMaterialTarget);
+		
+		for (TipoMaterial objeto: leitor.getTiposDeMaterial()) {
+			cbTipoMaterialTarget.addItem(objeto);			
+		}
+		
+		for (TipoMaterial objeto: leitor.getTiposDeMaterial()) {
+			cbTipoMaterialSource.addItem(objeto);			
+		}
+		
+		for (Entidade entidade: leitor.getEntidades()) {
+			cbEntidadeSource.addItem(entidade);			
+		}
+		for (Entidade entidade: leitor.getEntidades()) {
+			cbEntidadeTarget.addItem(entidade);			
+		}
+		
+		for (Autor objeto: leitor.getAutores()) {
+			cbAutorSource.addItem(objeto);			
+		}
+		for (Autor objeto: leitor.getAutores()) {
+			cbAutorTarget.addItem(objeto);			
+		}
+		for (LocalPublicacao objeto: leitor.getLocais()) {
+			cbLocalSource.addItem(objeto);			
+		}
+		for (LocalPublicacao objeto: leitor.getLocais()) {
+			cbLocalTarget.addItem(objeto);			
+		}
+		for (Editora objeto: leitor.getEditoras()) {
+			cbEditoraSource.addItem(objeto);			
+		}
+		for (Editora objeto: leitor.getEditoras()) {
+			cbEditoraTarget.addItem(objeto);			
+		}
+		
+		for (PalavraChave objeto: leitor.getPalavras()) {
+			cbPalChaveSource.addItem(objeto);			
+		}
+		for (PalavraChave objeto: leitor.getPalavras()) {
+			cbPalChaveTarget.addItem(objeto);			
+		}
 	}
 }

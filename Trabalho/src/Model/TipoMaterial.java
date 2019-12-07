@@ -16,4 +16,9 @@ public class TipoMaterial implements Serializable {
 	public void setTipoMaterial(String tipoMaterial) {
 		this.tipoMaterial = tipoMaterial;
 	}
+	
+	@Override
+	public String toString() {
+		return  tipoMaterial;
+	}
 }
