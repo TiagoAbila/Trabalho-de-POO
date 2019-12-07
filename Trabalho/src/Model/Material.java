@@ -92,6 +92,11 @@ public class Material implements Serializable {
 		this.nrISSN = nrISSN;
 	}
 	
+	@Override
+	public String toString() {
+		return titulo;
+	}
+	
 	
 }
 
