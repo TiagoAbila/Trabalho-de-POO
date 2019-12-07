@@ -16,5 +16,10 @@ public class LocalPublicacao implements Serializable {
 	public void setLocalPublicacao(String localPublicacao) {
 		this.localPublicacao = localPublicacao;
 	}
+	
+	@Override
+	public String toString() {
+		return  localPublicacao;
+	}
 
 }

@@ -17,4 +17,9 @@ public class PalavraChave implements Serializable {
 	public void setPalavraChave(String palavraChave) {
 		this.palavraChave = palavraChave;
 	}
+	
+	@Override
+	public String toString() {
+		return  palavraChave;
+	}
 }

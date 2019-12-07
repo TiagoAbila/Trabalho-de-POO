@@ -92,6 +92,7 @@ public class Material implements Serializable {
 		this.nrISSN = nrISSN;
 	}
 	
+	
 }
 
 
