@@ -22,6 +22,11 @@ public class Entidade implements Serializable {
 	public void setTipo(String tipo) {
 		this.tipo = tipo;
 	}
+
+	@Override
+	public String toString() {
+		return  entidade;
+	}
 	
 	
 }

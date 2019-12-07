@@ -15,13 +15,14 @@ import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 
-public class Leitura {
+public class Leitura implements Serializable {
 
 	private ArrayList<Linha> linhas = new ArrayList();
 	private ArrayList<Editora> editoras = new ArrayList();

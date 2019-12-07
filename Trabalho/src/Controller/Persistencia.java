@@ -9,24 +9,24 @@ import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 
 public class Persistencia {
-	private static void GravarObjetos(ArrayList<Object> lista) {
+	public void GravarObjetos(Leitura leitor) {
 		File arq = new File("ArquivoGeral.dat");
 		try {
 			ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(arq));
-			oos.writeObject(lista);
+			oos.writeObject(leitor);
 			oos.close();
 		} catch (IOException ex) {
 			System.out.printf("Erro: %s", ex.getMessage());
 		}
 	}
 
-	public static ArrayList<Object> BuscarObjetos() {
-		ArrayList<Object> lista = new ArrayList();
+	public Leitura BuscarObjetos() {
+		Leitura leitor = null;
 		try {
 			File arq = new File("ArquivoGeral.dat");
 			if (arq.exists()) {
 				ObjectInputStream ois = new ObjectInputStream(new FileInputStream(arq));
-				lista = (ArrayList<Object>) ois.readObject();
+				leitor = (Leitura) ois.readObject();
 				ois.close();
 			}
 		} catch (IOException ex) {
@@ -34,6 +34,6 @@ public class Persistencia {
 		} catch (ClassNotFoundException exe) {
 			System.out.printf("Erro: %s", exe.getMessage());
 		}
-		return(lista);
+		return leitor;
 	}
 }
