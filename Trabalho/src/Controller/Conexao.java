@@ -41,11 +41,11 @@ public class Conexao {
 		ResultSet result;
 		result = query.executeQuery( "select cd_material from material " +
 				"where "+
-				"cd_editora like (Select cd_editora from editora where nm_editora like '"+nm_editora+"') and " + 
-				"cd_entidade like (Select cd_entidade from entidade where nm_entidade like '"+nm_entidade+"' and tp_entidade like '"+tp_entidade+"') and " + 
-				"cd_local_publicacao like (Select cd_local_publicacao from local_publicacao where nm_local_publicacao like '"+nm_local_publicacao+"') and " + 
-				"tp_material like (Select tp_material from tipo_material where ds_material like '"+ds_material+"') and " + 
-				"tp_divulgacao like (Select tp_divulgacao from tipo_divulgacao where ds_divulgacao like '"+ds_divulgacao+"') and " + 
+				"cd_editora = (Select cd_editora from editora where nm_editora like '"+nm_editora+"') and " + 
+				"cd_entidade = (Select cd_entidade from entidade where nm_entidade like '"+nm_entidade+"' and tp_entidade like '"+tp_entidade+"') and " + 
+				"cd_local_publicacao = (Select cd_local_publicacao from local_publicacao where nm_local_publicacao like '"+nm_local_publicacao+"') and " + 
+				"tp_material = (Select tp_material from tipo_material where ds_material like '"+ds_material+"') and " + 
+				"tp_divulgacao = (Select tp_divulgacao from tipo_divulgacao where ds_divulgacao like '"+ds_divulgacao+"') and " + 
 				"nm_titulo like '"+nm_titulo+"' and " + 
 				"ds_ano_producao like '"+ds_ano_producao+"' and " + 
 				"ds_ano_publicacao like '"+ds_ano_publicacao+"' and " + 
@@ -82,10 +82,10 @@ public class Conexao {
 					ds_ano_publicacao + "', '" + 
 					ds_edicao + "', '" + 
 					nr_paginas + "', '" + 
-					ds_url_disponivel + "', " + 
-					nr_isbn + ", " + 
+					ds_url_disponivel + "', '" + 
+					nr_isbn + "', '" + 
 					nr_issn + 
-					");"
+					"' );"
 			);
 			bindAutores( getIndexAutores( nm_autor ) );
 			bindPalavraChave( getIndexPalavrasChave( ds_palavra_chave ) );
@@ -104,7 +104,7 @@ public class Conexao {
 		int cd_material =  result.getInt(1);
 		for (int i = 0; i < cd_autor.size(); i++) {
 			result = query.executeQuery(
-					"Select cd_autor, cd_material from material_autor where cd_material like '"+cd_material+"' and cd_autor like '"+cd_autor.get(i)+"';");
+					"Select cd_autor, cd_material from material_autor where cd_material = '"+cd_material+"' and cd_autor = '"+cd_autor.get(i)+"';");
 			if ( !result.first() ) {
 				query.execute("Insert into material_autor (cd_material, cd_autor) values ('"+cd_material+"', '"+cd_autor.get(i)+"');");
 			} 		
@@ -121,7 +121,7 @@ public class Conexao {
 		int cd_material =  result.getInt(1);
 		for (int i = 0; i < cd_palavra_chave.size(); i++) {
 			result = query.executeQuery(
-					"Select cd_palavra_chave, cd_material from material_palavra_chave where cd_material like '"+cd_material+"' and cd_palavra_chave like '"+cd_palavra_chave.get(i)+"';");
+					"Select cd_palavra_chave, cd_material from material_palavra_chave where cd_material = '"+cd_material+"' and cd_palavra_chave = '"+cd_palavra_chave.get(i)+"';");
 			if ( !result.first() ) {
 				query.execute("Insert into material_palavra_chave (cd_material, cd_palavra_chave) values ('"+cd_material+"', '"+cd_palavra_chave.get(i)+"');");
 			} 		
