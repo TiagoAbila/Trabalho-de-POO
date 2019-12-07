@@ -2,6 +2,9 @@ package Controller;
 //
 import java.sql.Statement;
 import java.util.ArrayList;
+
+import javax.swing.JOptionPane;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -10,18 +13,10 @@ import java.sql.SQLException;
 public class Conexao {
 	// Atributos
 	private Connection conexao;
-	private Statement query;
 
 	// Metodos
 	public void setConnection(String db, String usr, String pass) throws SQLException {
 		conexao = DriverManager.getConnection("jdbc:postgresql://localhost:5432/" + db, usr, pass);
-	}
-
-	/* Teste Insert */
-	public void insertQuery(int pk, String nome) throws SQLException {
-		query = conexao.createStatement();
-		query.execute("INSERT INTO autor (cd_autor, nm_autor) values (" + pk + ", '" + nome + "')");
-		query.close();
 	}
 	
 	public void insertIntoDB(
@@ -41,48 +36,68 @@ public class Conexao {
 			String ds_url_disponivel,
 			String nr_isbn,
 			String nr_issn
-			) throws SQLException {
-		
-		query = conexao.createStatement();
-		query.execute( 
-				"insert into material (\r\n" + 
-				"	cd_editora,\r\n" + 
-				"	cd_entidade,\r\n" + 
-				"	cd_local_publicacao,\r\n" + 
-				"	tp_material,\r\n" + 
-				"	tp_divulgacao,\r\n" + 
-				"	nm_titulo,\r\n" + 
-				"	ds_ano_producao,\r\n" + 
-				"	ds_ano_publicacao,\r\n" + 
-				"	ds_edicao,\r\n" + 
-				"	nr_paginas,\r\n" + 
-				"	ds_url_disponivel,\r\n" + 
-				"	nr_isbn,\r\n" + 
-				"	nr_issn\r\n" + 
-				") values (\r\n" + 
-				"	"+getIndexEditora(nm_editora)+",\r\n" +
-				"	"+getIndexEntidade(nm_entidade, tp_entidade)+",\r\n" +
-				"	"+getIndexLocalPublicacao(nm_local_publicacao)+",\r\n" +
-				"	"+getIndexMaterial(ds_material)+",\r\n" +
-				"	"+getIndexDivulgacao(ds_divulgacao)+",\r\n" +
-				"	'"+nm_titulo+"',\r\n" + 
-				"	'"+ds_ano_producao+"',\r\n" + 
-				"	'"+ds_ano_publicacao+"',\r\n" + 
-				"	'"+ds_edicao+"',\r\n" + 
-				"	'"+nr_paginas+"',\r\n" + 
-				"	'"+ds_url_disponivel+"',\r\n" + 
-				"	"+nr_isbn+",\r\n" + 
-				"	"+nr_issn+"\r\n" + 
-				");"
-				);
-				bindAutores( getIndexAutores( nm_autor ) );
-				bindPalavraChave( getIndexPalavrasChave( ds_palavra_chave ) );
-		query.close();
-				
+	) throws SQLException {
+		Statement query  = conexao.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+		ResultSet result;
+		result = query.executeQuery( "select cd_material from material " +
+				"where "+
+				"cd_editora like (Select cd_editora from editora where nm_editora like '"+nm_editora+"') and " + 
+				"cd_entidade like (Select cd_entidade from entidade where nm_entidade like '"+nm_entidade+"' and tp_entidade like '"+tp_entidade+"') and " + 
+				"cd_local_publicacao like (Select cd_local_publicacao from local_publicacao where nm_local_publicacao like '"+nm_local_publicacao+"') and " + 
+				"tp_material like (Select tp_material from tipo_material where ds_material like '"+ds_material+"') and " + 
+				"tp_divulgacao like (Select tp_divulgacao from tipo_divulgacao where ds_divulgacao like '"+ds_divulgacao+"') and " + 
+				"nm_titulo like '"+nm_titulo+"' and " + 
+				"ds_ano_producao like '"+ds_ano_producao+"' and " + 
+				"ds_ano_publicacao like '"+ds_ano_publicacao+"' and " + 
+				"ds_edicao like '"+ds_edicao+"' and " + 
+				"nr_paginas like '"+nr_paginas+"' and " + 
+				"ds_url_disponivel like '"+ds_url_disponivel+"' and " + 
+				"nr_isbn like '"+nr_isbn+"' and " + 
+				"nr_issn like '"+nr_issn+"';"
+		);
+		if ( !result.first() ) {
+			query.execute( 
+					"insert into material ( " + 
+					"cd_editora, " + 
+					"cd_entidade, " + 
+					"cd_local_publicacao, " + 
+					"tp_material, " + 
+					"tp_divulgacao, " + 
+					"nm_titulo, " + 
+					"ds_ano_producao, " + 
+					"ds_ano_publicacao, " + 
+					"ds_edicao, " + 
+					"nr_paginas, " + 
+					"ds_url_disponivel, " + 
+					"nr_isbn, " + 
+					"nr_issn " + 
+					") values (" + 
+					getIndexEditora(nm_editora) + ", " +
+					getIndexEntidade(nm_entidade, tp_entidade) + ", " +
+					getIndexLocalPublicacao(nm_local_publicacao) + ", " +
+					getIndexMaterial(ds_material) + ", " +
+					getIndexDivulgacao(ds_divulgacao) + ", '" +
+					nm_titulo + "', '" + 
+					ds_ano_producao + "', '" + 
+					ds_ano_publicacao + "', '" + 
+					ds_edicao + "', '" + 
+					nr_paginas + "', '" + 
+					ds_url_disponivel + "', " + 
+					nr_isbn + ", " + 
+					nr_issn + 
+					");"
+			);
+			bindAutores( getIndexAutores( nm_autor ) );
+			bindPalavraChave( getIndexPalavrasChave( ds_palavra_chave ) );
+			query.close();
+			result.close();
+		} else {
+			JOptionPane.showMessageDialog(null, "Registro idêntico já cadastrado, inserção cancelada.");
+		}
 	}
 	
-	public void bindAutores( ArrayList<Integer> cd_autor ) throws SQLException {
-		query  = conexao.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+	private void bindAutores( ArrayList<Integer> cd_autor ) throws SQLException {
+		Statement query  = conexao.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 		ResultSet result;
 		result = query.executeQuery("select max(cd_material) from material;");
 		result.first();
@@ -94,10 +109,12 @@ public class Conexao {
 				query.execute("Insert into material_autor (cd_material, cd_autor) values ('"+cd_material+"', '"+cd_autor.get(i)+"');");
 			} 		
 		}
+		query.close();
+		result.close();
 	}
 	
-	public void bindPalavraChave( ArrayList<Integer> cd_palavra_chave ) throws SQLException {
-		query  = conexao.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+	private void bindPalavraChave( ArrayList<Integer> cd_palavra_chave ) throws SQLException {
+		Statement query  = conexao.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 		ResultSet result;
 		result = query.executeQuery("select max(cd_material) from material;");
 		result.first();
@@ -109,11 +126,13 @@ public class Conexao {
 				query.execute("Insert into material_palavra_chave (cd_material, cd_palavra_chave) values ('"+cd_material+"', '"+cd_palavra_chave.get(i)+"');");
 			} 		
 		}
+		query.close();
+		result.close();
 	}
 	
-	public ArrayList<Integer> getIndexAutores( String[] nm_autor) throws SQLException {
-		query  = conexao.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
-		ResultSet result;
+	private ArrayList<Integer> getIndexAutores( String[] nm_autor) throws SQLException {
+		Statement query  = conexao.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+		ResultSet result = null;
 		ArrayList<Integer> saida = new ArrayList<Integer>();
 		for (int i = 0; i < nm_autor.length; i++) {
 			result = query.executeQuery(
@@ -129,12 +148,14 @@ public class Conexao {
 				saida.add(result.getInt(1));
 			}
 		}
+		query.close();
+		result.close();
 		return saida ;
 	}
 	
-	public ArrayList<Integer> getIndexPalavrasChave( String[] ds_palavra_chave) throws SQLException {
-		query  = conexao.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
-		ResultSet result;
+	private ArrayList<Integer> getIndexPalavrasChave( String[] ds_palavra_chave) throws SQLException {
+		Statement query  = conexao.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+		ResultSet result = null;
 		ArrayList<Integer> saida = new ArrayList<Integer>();
 		for (int i = 0; i < ds_palavra_chave.length; i++) {
 			result = query.executeQuery(
@@ -150,11 +171,13 @@ public class Conexao {
 				saida.add(result.getInt(1));
 			}
 		}
+		query.close();
+		result.close();
 		return saida ;
 	}
 	
-	public int getIndexMaterial( String ds_material ) throws SQLException {
-		query  = conexao.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+	private int getIndexMaterial( String ds_material ) throws SQLException {
+		Statement query  = conexao.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 		ResultSet result;
 		result = query.executeQuery("Select tp_material from tipo_material where ds_material like '"+ds_material+"';");
 		
@@ -168,8 +191,8 @@ public class Conexao {
  		}
 	}
 	
-	public int getIndexDivulgacao( String ds_divulgacao ) throws SQLException {
-		query  = conexao.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+	private int getIndexDivulgacao( String ds_divulgacao ) throws SQLException {
+		Statement query  = conexao.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 		ResultSet result;
 		result = query.executeQuery("Select tp_divulgacao from tipo_divulgacao where ds_divulgacao like '"+ds_divulgacao+"';");
 		
@@ -183,8 +206,8 @@ public class Conexao {
  		}
 	}
 	
-	public int getIndexEntidade( String nm_entidade, String tp_entidade ) throws SQLException {
-		query  = conexao.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+	private int getIndexEntidade( String nm_entidade, String tp_entidade ) throws SQLException {
+		Statement query  = conexao.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 		ResultSet result;
 		result = query.executeQuery("Select cd_entidade from entidade where nm_entidade like '"+nm_entidade+"' and tp_entidade like '"+tp_entidade+"';");
 		
@@ -198,8 +221,8 @@ public class Conexao {
  		}
 	}
 	
-	public int getIndexLocalPublicacao( String nm_local_publicacao ) throws SQLException {
-		query  = conexao.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+	private int getIndexLocalPublicacao( String nm_local_publicacao ) throws SQLException {
+		Statement query  = conexao.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 		ResultSet result;
 		result = query.executeQuery("Select cd_local_publicacao from local_publicacao where nm_local_publicacao like '"+nm_local_publicacao+"';");
 		
@@ -213,8 +236,8 @@ public class Conexao {
  		}
 	}
 	
-	public int getIndexEditora( String nm_editora ) throws SQLException {
-		query  = conexao.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+	private int getIndexEditora( String nm_editora ) throws SQLException {
+		Statement query  = conexao.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 		ResultSet result;
 		result = query.executeQuery("Select cd_editora from editora where nm_editora like '"+nm_editora+"';");
 		
