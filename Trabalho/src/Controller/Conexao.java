@@ -24,8 +24,8 @@ public class Conexao {
 			String ds_divulgacao,
 			String nm_entidade,
 			String tp_entidade, // Governamental ou ñ
-			String[] nm_autor,
-			String[] ds_palavra_chave, 
+			ArrayList<String> nm_autor,
+			ArrayList<String> ds_palavra_chave, 
 			String nm_local_publicacao,
 			String nm_editora,
 			String nm_titulo,
@@ -130,18 +130,18 @@ public class Conexao {
 		result.close();
 	}
 	
-	private ArrayList<Integer> getIndexAutores( String[] nm_autor) throws SQLException {
+	private ArrayList<Integer> getIndexAutores( ArrayList<String> nm_autor) throws SQLException {
 		Statement query  = conexao.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 		ResultSet result = null;
 		ArrayList<Integer> saida = new ArrayList<Integer>();
-		for (int i = 0; i < nm_autor.length; i++) {
+		for (int i = 0; i < nm_autor.size(); i++) {
 			result = query.executeQuery(
-					"Select cd_autor from autor where nm_autor like '" + nm_autor[i] + "';");
+					"Select cd_autor from autor where nm_autor like '" + nm_autor.get(i) + "';");
 			
 			if (!result.first()) {
-				query.execute("Insert into autor (nm_autor) values ('" + nm_autor[i] + "');");
+				query.execute("Insert into autor (nm_autor) values ('" + nm_autor.get(i) + "');");
 				result = query.executeQuery(
-						"Select cd_autor from autor where nm_autor like '" + nm_autor[i] + "';");
+						"Select cd_autor from autor where nm_autor like '" + nm_autor.get(i) + "';");
 				result.first();
 				saida.add(result.getInt(1));
 			} else {
@@ -153,18 +153,18 @@ public class Conexao {
 		return saida ;
 	}
 	
-	private ArrayList<Integer> getIndexPalavrasChave( String[] ds_palavra_chave) throws SQLException {
+	private ArrayList<Integer> getIndexPalavrasChave( ArrayList<String> ds_palavra_chave) throws SQLException {
 		Statement query  = conexao.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 		ResultSet result = null;
 		ArrayList<Integer> saida = new ArrayList<Integer>();
-		for (int i = 0; i < ds_palavra_chave.length; i++) {
+		for (int i = 0; i < ds_palavra_chave.size(); i++) {
 			result = query.executeQuery(
-					"Select cd_palavra_chave from palavra_chave where ds_palavra_chave like '" + ds_palavra_chave[i] + "';");
+					"Select cd_palavra_chave from palavra_chave where ds_palavra_chave like '" + ds_palavra_chave.get(i) + "';");
 			
 			if (!result.first()) {
-				query.execute("Insert into palavra_chave (ds_palavra_chave) values ('" + ds_palavra_chave[i] + "');");
+				query.execute("Insert into palavra_chave (ds_palavra_chave) values ('" + ds_palavra_chave.get(i) + "');");
 				result = query.executeQuery(
-						"Select cd_palavra_chave from palavra_chave where ds_palavra_chave like '" + ds_palavra_chave[i] + "';");
+						"Select cd_palavra_chave from palavra_chave where ds_palavra_chave like '" + ds_palavra_chave.get(i) + "';");
 				result.first();
 				saida.add(result.getInt(1));
 			} else {
