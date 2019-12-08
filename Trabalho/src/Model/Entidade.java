@@ -26,7 +26,5 @@ public class Entidade implements Serializable {
 	@Override
 	public String toString() {
 		return  entidade;
-	}
-	
-	
+	}	
 }

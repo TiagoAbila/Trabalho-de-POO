@@ -44,6 +44,12 @@ public class Apresentacao extends JFrame {
 	private JTextField tfMaterialEdicao;
 	private JTextField tfMaterialIsbn;
 	private JTextField tfMaterialIssn;
+	private JTextField tfAutorSource;
+	private JTextField tfEditarLocal;
+	private JTextField tfEditarEditora;
+	private JTextField tfEditarPalavraChave;
+	private JTextField tfEditarMeioDivulgacao;
+	private JTextField tfEditarTipoMaterial;
 	
 	public File getArquivoTrabalhado() {
 		return arquivoTrabalhado;
@@ -88,7 +94,7 @@ public class Apresentacao extends JFrame {
 		panelAutor.add(cbAutorSource);
 		
 		JComboBox cbAutorTarget = new JComboBox();
-		cbAutorTarget.setBounds(130, 136, 431, 20);
+		cbAutorTarget.setBounds(130, 155, 431, 20);
 		panelAutor.add(cbAutorTarget);
 		
 		JLabel label_16 = new JLabel("Source");
@@ -98,19 +104,28 @@ public class Apresentacao extends JFrame {
 		
 		JLabel label_17 = new JLabel("Target");
 		label_17.setFont(new Font("Tahoma", Font.PLAIN, 17));
-		label_17.setBounds(57, 133, 63, 20);
+		label_17.setBounds(57, 152, 63, 20);
 		panelAutor.add(label_17);
 		
-		JButton btnAtualizarAutor = new JButton("Atualizar");
-		btnAtualizarAutor.setBounds(279, 206, 89, 23);
+		JButton btnAtualizarAutor = new JButton("Substituir");
+		btnAtualizarAutor.setBounds(173, 206, 89, 23);
 		panelAutor.add(btnAtualizarAutor);
+		
+		tfAutorSource = new JTextField();
+		tfAutorSource.setBounds(133, 90, 431, 20);
+		panelAutor.add(tfAutorSource);
+		tfAutorSource.setColumns(10);
+		
+		JButton btnEditarAutor = new JButton("Editar");
+		btnEditarAutor.setBounds(365, 206, 89, 23);
+		panelAutor.add(btnEditarAutor);
 		
 		JPanel panelLocal = new JPanel();
 		tabbedPane.addTab("Local de Publica\u00E7\u00E3o", null, panelLocal, null);
 		panelLocal.setLayout(null);
 		
 		JComboBox cbLocalSource = new JComboBox();
-		cbLocalSource.setBounds(137, 81, 431, 20);
+		cbLocalSource.setBounds(137, 57, 431, 20);
 		panelLocal.add(cbLocalSource);
 		
 		JComboBox cbLocalTarget = new JComboBox();
@@ -119,7 +134,7 @@ public class Apresentacao extends JFrame {
 		
 		JLabel label_10 = new JLabel("Source");
 		label_10.setFont(new Font("Tahoma", Font.PLAIN, 17));
-		label_10.setBounds(49, 88, 66, 14);
+		label_10.setBounds(49, 64, 66, 14);
 		panelLocal.add(label_10);
 		
 		JLabel label_11 = new JLabel("Target");
@@ -127,9 +142,18 @@ public class Apresentacao extends JFrame {
 		label_11.setBounds(49, 140, 63, 20);
 		panelLocal.add(label_11);
 		
-		JButton btnAtualizarLocalPublicacao = new JButton("Atualizar");
-		btnAtualizarLocalPublicacao.setBounds(288, 209, 89, 23);
+		JButton btnAtualizarLocalPublicacao = new JButton("Substituir");
+		btnAtualizarLocalPublicacao.setBounds(183, 184, 89, 23);
 		panelLocal.add(btnAtualizarLocalPublicacao);
+		
+		tfEditarLocal = new JTextField();
+		tfEditarLocal.setColumns(10);
+		tfEditarLocal.setBounds(137, 88, 431, 20);
+		panelLocal.add(tfEditarLocal);
+		
+		JButton button_1 = new JButton("Editar");
+		button_1.setBounds(421, 184, 89, 23);
+		panelLocal.add(button_1);
 		
 		JPanel panelEditora = new JPanel();
 		tabbedPane.addTab("Editora", null, panelEditora, null);
@@ -140,7 +164,7 @@ public class Apresentacao extends JFrame {
 		panelEditora.add(cbEditoraSource);
 		
 		JComboBox cbEditoraTarget = new JComboBox();
-		cbEditoraTarget.setBounds(129, 135, 431, 20);
+		cbEditoraTarget.setBounds(129, 161, 431, 20);
 		panelEditora.add(cbEditoraTarget);
 		
 		JLabel label_14 = new JLabel("Source");
@@ -150,12 +174,21 @@ public class Apresentacao extends JFrame {
 		
 		JLabel label_15 = new JLabel("Target");
 		label_15.setFont(new Font("Tahoma", Font.PLAIN, 17));
-		label_15.setBounds(53, 135, 63, 20);
+		label_15.setBounds(53, 161, 63, 20);
 		panelEditora.add(label_15);
 		
 		JButton btnAtualizarEditora = new JButton("Atualizar");
-		btnAtualizarEditora.setBounds(288, 209, 89, 23);
+		btnAtualizarEditora.setBounds(165, 209, 89, 23);
 		panelEditora.add(btnAtualizarEditora);
+		
+		tfEditarEditora = new JTextField();
+		tfEditarEditora.setColumns(10);
+		tfEditarEditora.setBounds(129, 93, 431, 20);
+		panelEditora.add(tfEditarEditora);
+		
+		JButton btnEditarEditora = new JButton("Editar");
+		btnEditarEditora.setBounds(423, 209, 89, 23);
+		panelEditora.add(btnEditarEditora);
 		
 		JPanel panelEntidade = new JPanel();
 		tabbedPane.addTab("Entidade", null, panelEntidade, null);
@@ -228,34 +261,52 @@ public class Apresentacao extends JFrame {
 		panelPalChave.add(label_9);
 		
 		JButton btnAtualizarPalavrasChave = new JButton("Atualizar");
-		btnAtualizarPalavrasChave.setBounds(302, 197, 89, 23);
+		btnAtualizarPalavrasChave.setBounds(186, 186, 89, 23);
 		panelPalChave.add(btnAtualizarPalavrasChave);
+		
+		tfEditarPalavraChave = new JTextField();
+		tfEditarPalavraChave.setColumns(10);
+		tfEditarPalavraChave.setBounds(140, 94, 431, 20);
+		panelPalChave.add(tfEditarPalavraChave);
+		
+		JButton btnEditarPalavraChave = new JButton("Editar");
+		btnEditarPalavraChave.setBounds(379, 186, 89, 23);
+		panelPalChave.add(btnEditarPalavraChave);
 		
 		JPanel panelMeioDiv = new JPanel();
 		tabbedPane.addTab("Meio de Divulga\u00E7\u00E3o", null, panelMeioDiv, null);
 		panelMeioDiv.setLayout(null);
 		
 		JComboBox cbMeioDivulgaçãoSource = new JComboBox();
-		cbMeioDivulgaçãoSource.setBounds(140, 76, 431, 20);
+		cbMeioDivulgaçãoSource.setBounds(140, 59, 431, 20);
 		panelMeioDiv.add(cbMeioDivulgaçãoSource);
 		
 		JComboBox cbMeioDivulgaçãoTarget = new JComboBox();
-		cbMeioDivulgaçãoTarget.setBounds(140, 128, 431, 20);
+		cbMeioDivulgaçãoTarget.setBounds(140, 147, 431, 20);
 		panelMeioDiv.add(cbMeioDivulgaçãoTarget);
 		
 		JLabel lblSource = new JLabel("Source");
 		lblSource.setFont(new Font("Tahoma", Font.PLAIN, 17));
-		lblSource.setBounds(32, 76, 66, 14);
+		lblSource.setBounds(32, 59, 66, 14);
 		panelMeioDiv.add(lblSource);
 		
 		JLabel lblTarget = new JLabel("Target");
 		lblTarget.setFont(new Font("Tahoma", Font.PLAIN, 17));
-		lblTarget.setBounds(32, 128, 63, 20);
+		lblTarget.setBounds(32, 147, 63, 20);
 		panelMeioDiv.add(lblTarget);
 		
 		JButton btnAtualizarMeioDivulgacao = new JButton("Atualizar");
-		btnAtualizarMeioDivulgacao.setBounds(298, 205, 89, 23);
+		btnAtualizarMeioDivulgacao.setBounds(182, 194, 89, 23);
 		panelMeioDiv.add(btnAtualizarMeioDivulgacao);
+		
+		tfEditarMeioDivulgacao = new JTextField();
+		tfEditarMeioDivulgacao.setColumns(10);
+		tfEditarMeioDivulgacao.setBounds(140, 90, 431, 20);
+		panelMeioDiv.add(tfEditarMeioDivulgacao);
+		
+		JButton btnEditarMeioDivulgacao = new JButton("Editar");
+		btnEditarMeioDivulgacao.setBounds(427, 194, 89, 23);
+		panelMeioDiv.add(btnEditarMeioDivulgacao);
 		
 		JPanel panelTipoMaterial = new JPanel();
 		tabbedPane.addTab("Tipo de Material", null, panelTipoMaterial, null);
@@ -263,25 +314,34 @@ public class Apresentacao extends JFrame {
 		
 		JLabel label_1 = new JLabel("Source");
 		label_1.setFont(new Font("Tahoma", Font.PLAIN, 17));
-		label_1.setBounds(51, 75, 66, 14);
+		label_1.setBounds(51, 64, 66, 14);
 		panelTipoMaterial.add(label_1);
 		
 		JComboBox cbTipoMaterialSource = new JComboBox();
-		cbTipoMaterialSource.setBounds(159, 75, 431, 20);
+		cbTipoMaterialSource.setBounds(159, 64, 431, 20);
 		panelTipoMaterial.add(cbTipoMaterialSource);
 		
 		JLabel label_7 = new JLabel("Target");
 		label_7.setFont(new Font("Tahoma", Font.PLAIN, 17));
-		label_7.setBounds(51, 128, 63, 20);
+		label_7.setBounds(51, 148, 63, 20);
 		panelTipoMaterial.add(label_7);
 		
 		JComboBox cbTipoMaterialTarget = new JComboBox();
-		cbTipoMaterialTarget.setBounds(159, 128, 431, 20);
+		cbTipoMaterialTarget.setBounds(159, 148, 431, 20);
 		panelTipoMaterial.add(cbTipoMaterialTarget);
 		
 		JButton btnAtualizarTipoMaterial = new JButton("Atualizar");
-		btnAtualizarTipoMaterial.setBounds(300, 212, 89, 23);
+		btnAtualizarTipoMaterial.setBounds(217, 200, 89, 23);
 		panelTipoMaterial.add(btnAtualizarTipoMaterial);
+		
+		tfEditarTipoMaterial = new JTextField();
+		tfEditarTipoMaterial.setColumns(10);
+		tfEditarTipoMaterial.setBounds(159, 96, 431, 20);
+		panelTipoMaterial.add(tfEditarTipoMaterial);
+		
+		JButton btnEditarTipoMaterial = new JButton("Editar");
+		btnEditarTipoMaterial.setBounds(440, 200, 89, 23);
+		panelTipoMaterial.add(btnEditarTipoMaterial);
 		
 		JPanel panelMaterial = new JPanel();
 		tabbedPane.addTab("Material", null, panelMaterial, null);
