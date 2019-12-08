@@ -32,6 +32,9 @@ public class Material implements Serializable {
 	}
 
 	public void setTitulo(String titulo) {
+		if (titulo == null) {
+			return;
+		}
 		this.titulo = titulo;
 	}
 
@@ -40,6 +43,9 @@ public class Material implements Serializable {
 	}
 
 	public void setAnoProducao(String anoProducao) {
+		if (anoProducao == null) {
+			return;
+		}
 		this.anoProducao = anoProducao;
 	}
 
@@ -48,6 +54,9 @@ public class Material implements Serializable {
 	}
 
 	public void setAnoPublicacao(String anoPublicacao) {
+		if (anoPublicacao == null) {
+			return;
+		}
 		this.anoPublicacao = anoPublicacao;
 	}
 
@@ -56,6 +65,9 @@ public class Material implements Serializable {
 	}
 
 	public void setUrlDisponivel(String urlDisponivel) {
+		if (urlDisponivel == null) {
+			return;
+		}
 		this.urlDisponivel = urlDisponivel;
 	}
 
@@ -64,6 +76,9 @@ public class Material implements Serializable {
 	}
 
 	public void setNrPaginas(String nrPaginas) {
+		if (nrPaginas == null) {
+			return;
+		}
 		this.nrPaginas = nrPaginas;
 	}
 
@@ -72,6 +87,9 @@ public class Material implements Serializable {
 	}
 
 	public void setEdicao(String edicao) {
+		if (edicao == null) {
+			return;
+		}
 		this.edicao = edicao;
 	}
 
@@ -80,6 +98,9 @@ public class Material implements Serializable {
 	}
 
 	public void setNrISBN(String nrISBN) {
+		if (nrISBN == null) {
+			return;
+		}
 		this.nrISBN = nrISBN;
 	}
 
@@ -88,6 +109,9 @@ public class Material implements Serializable {
 	}
 
 	public void setNrISSN(String nrISSN) {
+		if (nrISSN == null) {
+			return;
+		}
 		this.nrISSN = nrISSN;
 	}
 	

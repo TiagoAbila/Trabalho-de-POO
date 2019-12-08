@@ -14,6 +14,9 @@ public class LocalPublicacao implements Serializable {
 	}
 
 	public void setLocalPublicacao(String localPublicacao) {
+		if (localPublicacao == null) {
+			return;
+		}
 		this.localPublicacao = localPublicacao;
 	}
 	

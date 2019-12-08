@@ -15,12 +15,18 @@ public class Entidade implements Serializable {
 		return entidade;
 	}
 	public void setEntidade(String entidade) {
+		if (entidade == null) {
+			return;
+		}
 		this.entidade = entidade;
 	}
 	public String getTipo() {
 		return tipo;
 	}
 	public void setTipo(String tipo) {
+		if (tipo == null) {
+			return;
+		}
 		this.tipo = tipo;
 	}
 

@@ -14,6 +14,9 @@ public class Editora implements Serializable {
 	}
 
 	public void setEditora(String editora) {
+		if (editora == null) {
+			return;
+		}
 		this.editora = editora;
 	}
 	

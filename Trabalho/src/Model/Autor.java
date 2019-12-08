@@ -15,6 +15,9 @@ public class Autor implements Serializable {
 	}
 
 	public void setAutor(String autor) {
+		if (autor == null) {
+			return;
+		}
 		this.autor = autor;
 	}
 	

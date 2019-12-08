@@ -47,6 +47,9 @@ public class Linha implements Serializable {
 	}
 	
 	public void setAutores(ArrayList<Autor> autores) {
+		if (autores == null) {
+			return;
+		}
 		this.autores = autores;
 	}
 	
@@ -56,6 +59,9 @@ public class Linha implements Serializable {
 
 
 	public void setEntidadeLinha(Entidade entidadeLinha) {
+		if (entidadeLinha == null) {
+			return;
+		}
 		this.entidadeLinha = entidadeLinha;
 	}
 
@@ -65,6 +71,9 @@ public class Linha implements Serializable {
 	}
 
 	public void setIdLinha(int idLinha) {
+		if (idLinha <= -1) {
+			return;
+		}
 		this.idLinha = idLinha;
 	}
 
@@ -73,6 +82,9 @@ public class Linha implements Serializable {
 	}
 
 	public void setEditoraLinha(Editora editoraLinha) {
+		if (editoraLinha == null) {
+			return;
+		}
 		this.editoraLinha = editoraLinha;
 	}
 
@@ -81,6 +93,9 @@ public class Linha implements Serializable {
 	}
 
 	public void setLocalPubliLinha(LocalPublicacao localPubliLinha) {
+		if (localPubliLinha == null) {
+			return;
+		}
 		this.localPubliLinha = localPubliLinha;
 	}
 
@@ -89,6 +104,9 @@ public class Linha implements Serializable {
 	}
 
 	public void setMaterialLinha(Material materialLinha) {
+		if (materialLinha == null) {
+			return;
+		}
 		this.materialLinha = materialLinha;
 	}
 
@@ -97,6 +115,9 @@ public class Linha implements Serializable {
 	}
 
 	public void setPalavrasChaveLinha(ArrayList<PalavraChave> palavrasChaveLinha) {
+		if (palavrasChaveLinha == null) {
+			return;
+		}
 		this.palavrasChaveLinha = palavrasChaveLinha;
 	}
 	
@@ -109,6 +130,9 @@ public class Linha implements Serializable {
 	}
 
 	public void setTipoDivulLinha(TipoDivulgacao tipoDivulLinha) {
+		if (tipoDivulLinha == null) {
+			return;
+		}
 		this.tipoDivulLinha = tipoDivulLinha;
 	}
 
@@ -117,6 +141,9 @@ public class Linha implements Serializable {
 	}
 
 	public void setTipoMateLinha(TipoMaterial tipoMateLinha) {
+		if (tipoMateLinha == null) {
+			return;
+		}
 		this.tipoMateLinha = tipoMateLinha;
 	}	
 	

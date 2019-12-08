@@ -14,11 +14,14 @@ public class TipoMaterial implements Serializable {
 	}
 
 	public void setTipoMaterial(String tipoMaterial) {
+		if (tipoMaterial == null) {
+			return;
+		}
 		this.tipoMaterial = tipoMaterial;
 	}
-	
+
 	@Override
 	public String toString() {
-		return  tipoMaterial;
+		return tipoMaterial;
 	}
 }
