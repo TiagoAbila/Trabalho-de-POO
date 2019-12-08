@@ -19,6 +19,9 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 
@@ -46,53 +49,64 @@ public class Leitura implements Serializable {
 				Linha novaLinha = new Linha(linhaCorrente++);
 				newRow = (l.replaceAll(";", " ; ")).split(";");
 
-				TipoMaterial novoTipoMat = new TipoMaterial(newRow[0]);
+				TipoMaterial novoTipoMat = new TipoMaterial(newRow[0].trim());
 				novoTipoMat = adicionarNaLista(novoTipoMat);
 				novaLinha.setTipoMateLinha(novoTipoMat);
 
-				TipoDivulgacao novoTipoDiv = new TipoDivulgacao(newRow[1]);
+				TipoDivulgacao novoTipoDiv = new TipoDivulgacao(newRow[1].trim());
 				novoTipoDiv = adicionarNaLista(novoTipoDiv);
 				novaLinha.setTipoDivulLinha(novoTipoDiv);
 
-				Entidade novaEntidade = new Entidade(newRow[2]);
+				Entidade novaEntidade = new Entidade(newRow[2],newRow[3].trim());
 				novaEntidade = adicionarNaLista(novaEntidade);
 				novaLinha.setEntidadeLinha(novaEntidade);
 
-				Editora novaEditora = new Editora(newRow[11]);
+				Editora novaEditora = new Editora(newRow[11].trim());
 				novaEditora = adicionarNaLista(novaEditora);
 				novaLinha.setEditoraLinha(novaEditora);
 
-				String[] autoresDaRow = newRow[4].split(",");
+				String[] autoresDaRow = newRow[4].split("[,|]");
+				
 				if (autoresDaRow.length > 0) {
 					for (String autor : autoresDaRow) {
-						Autor novoAutor = new Autor(autor);
+						Autor novoAutor = new Autor(autor.trim());
 						novoAutor = adicionarNaLista(novoAutor);
 						novaLinha.addAutor(novoAutor);
 					}
 				} else {
-					Autor novoAutor = new Autor(newRow[4]);
+					Autor novoAutor = new Autor(newRow[4].trim());
 					novoAutor = adicionarNaLista(novoAutor);
 					novaLinha.addAutor(novoAutor);
 
 				}
 
-				PalavraChave novaPalavra = new PalavraChave(newRow[6]);
-				novaPalavra = adicionarNaLista(novaPalavra);
-				novaLinha.setPalavraChaveLinha(novaPalavra);
+				String[] palavrasDaRow = newRow[6].split("[|,-]");
+				
+				if (palavrasDaRow.length > 0) {
+					for (String palavra : palavrasDaRow) {
+						PalavraChave novaPalavra = new PalavraChave(palavra.trim());
+						novaPalavra = adicionarNaLista(novaPalavra);
+						novaLinha.addPalavraChave(novaPalavra);
+					}
+				} else {
+					PalavraChave novaPalavra = new PalavraChave(newRow[6].trim());
+					novaPalavra = adicionarNaLista(novaPalavra);
+					novaLinha.addPalavraChave(novaPalavra);
 
-				LocalPublicacao novoLocal = new LocalPublicacao(newRow[10]);
+				}
+
+				LocalPublicacao novoLocal = new LocalPublicacao(newRow[10].trim());
 				novoLocal = adicionarNaLista(novoLocal);
 				novaLinha.setLocalPubliLinha(novoLocal);
 
-				Material novoMaterial = new Material(newRow[5], newRow[7], newRow[8], newRow[13], newRow[12], newRow[9],
-						newRow[14], newRow[15]);
+				Material novoMaterial = new Material(newRow[5].trim(), newRow[7].trim(), newRow[8].trim(), newRow[13].trim(), newRow[12].trim(), newRow[9].trim(),
+						newRow[14].trim(), newRow[15].trim());
 				novoMaterial = adicionarNaLista(novoMaterial);
 				novaLinha.setMaterialLinha(novoMaterial);
 				linhas.add(novaLinha);
 				contadorTeste++;
 			}
 		} catch (Exception e) {
-			System.out.println("" + contadorTeste);
 			throw e;
 		}
 	}
@@ -118,25 +132,36 @@ public class Leitura implements Serializable {
 	
 	public void Substituir(LocalPublicacao objectSource, LocalPublicacao objectTarget) {
 		for(Linha linha: linhas) {
-			if(linha.getLocalPubliLinha().equals(objectTarget)) {
+			if(linha.getLocalPubliLinha().equals(objectTarget)) {			
 				linha.setLocalPubliLinha(objectSource);
 			}
 		}
 	}
 	
-	public void Substituir(Material objectSource, Material objectTarget) {
-		for(Linha linha: linhas) {
-			if(linha.getMaterialLinha().equals(objectTarget)) {
-				linha.setMaterialLinha(objectSource);
-			}
-		}
+	public void Substituir(Material objectSource, String titulo, String anoProducao, String anoPublicacao, String urlDisponivel, String nrPaginas,
+			String edicao, String nrISBN, String nrISSN) {
+		objectSource.setAnoProducao(anoProducao);
+		objectSource.setAnoPublicacao(anoPublicacao);
+		objectSource.setEdicao(edicao);
+		objectSource.setNrISSN(nrISSN);
+		objectSource.setNrISBN(nrISBN);
+		objectSource.setNrPaginas(nrPaginas);
+		objectSource.setTitulo(titulo);
+		objectSource.setUrlDisponivel(urlDisponivel);
 	}
+	
 	
 	public void Substituir(PalavraChave objectSource, PalavraChave objectTarget) {
 		for(Linha linha: linhas) {
-			if(linha.getPalavraChaveLinha().equals(objectTarget)) {
-				linha.setPalavraChaveLinha(objectSource);
+			ArrayList<PalavraChave> a = new ArrayList();
+			for(PalavraChave palavra: linha.getPalavrasChaveLinha()) {
+				if(palavra.equals(objectTarget)){
+					a.add(objectSource);
+				}else{
+					a.add(palavra);
+				}
 			}
+			linha.setPalavrasChaveLinha(a);
 		}
 	}
 	
@@ -153,12 +178,12 @@ public class Leitura implements Serializable {
 			if(linha.getTipoMateLinha().equals(objectTarget)) {
 				linha.setTipoMateLinha(objectSource);
 			}
-		}	
+		}
 	}
 	
-	public void Substituir(Autor objectSource, Autor objectTarget) {
-		ArrayList<Autor> a = new ArrayList();
+	public void Substituir(Autor objectSource, Autor objectTarget) {	
 		for(Linha linha: linhas) {
+			ArrayList<Autor> a = new ArrayList();
 			for(Autor autor: linha.getAutores()) {
 				if(autor.equals(objectTarget)){
 					a.add(objectSource);
@@ -168,72 +193,6 @@ public class Leitura implements Serializable {
 			}
 			linha.setAutores(a);
 		}
-		
-	}
-	
-
-	public int getContadorTeste() {
-		return this.contadorTeste;
-	}
-
-	public String teste() {
-		StringBuilder montador = new StringBuilder();
-
-		montador.append("Linhas: \n");
-		for (Linha obj : linhas) {
-			montador.append(obj.toString() + "\n");
-		}
-		montador.append(" \n");
-		montador.append("Tipos de Material: \n");
-		for (TipoMaterial obj : tiposDeMaterial) {
-			montador.append(obj.getTipoMaterial() + "\n");
-		}
-		montador.append(" \n");
-		montador.append("Tipos de Divulgacao: \n");
-		for (TipoDivulgacao obj : tiposDeDivulgacao) {
-			montador.append(obj.getTipoDivulgacao() + "\n");
-		}
-		montador.append(" \n");
-		montador.append("Entidades: \n");
-		for (Entidade obj : entidades) {
-			montador.append(obj.getEntidade() + "\n");
-		}
-		montador.append(" \n");
-		montador.append("Editoras: \n");
-		for (Editora obj : editoras) {
-			montador.append(obj.getEditora() + "\n");
-		}
-		montador.append(" \n");
-		montador.append("Autor: \n");
-		for (Autor obj : autores) {
-			montador.append(obj.getAutor() + "\n");
-		}
-		montador.append(" \n");
-		montador.append("Palavras Chaves: \n");
-		for (PalavraChave obj : palavras) {
-			montador.append(obj.getPalavraChave() + "\n");
-		}
-		montador.append(" \n");
-		montador.append("Locais: \n");
-		for (LocalPublicacao obj : locais) {
-			montador.append(obj.getLocalPublicacao() + "\n");
-		}
-		montador.append(" \n");
-		montador.append("Materiais: \n");
-		for (Material obj : materiais) {
-			montador.append(obj.getTitulo() + ",");
-			montador.append(obj.getAnoProducao() + ",");
-			montador.append(obj.getAnoPublicacao() + ",");
-			montador.append(obj.getEdicao() + ",");
-			montador.append(obj.getNrPaginas() + ",");
-			montador.append(obj.getUrlDisponivel() + ",");
-			montador.append(obj.getNrISBN() + ",");
-			montador.append(obj.getNrISSN() + ",");
-			// montador.append(obj.);
-			montador.append("\n");
-			montador.append(" \n");
-		}
-		return montador.toString();
 	}
 
 	public TipoMaterial adicionarNaLista(TipoMaterial objeto) {

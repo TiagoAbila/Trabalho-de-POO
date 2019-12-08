@@ -44,6 +44,7 @@ public class Apresentacao extends JFrame {
 	private JTextField tfMaterialEdicao;
 	private JTextField tfMaterialIsbn;
 	private JTextField tfMaterialIssn;
+	private JTextField tfNrPaginas;
 	
 	public File getArquivoTrabalhado() {
 		return arquivoTrabalhado;
@@ -102,6 +103,12 @@ public class Apresentacao extends JFrame {
 		panelAutor.add(label_17);
 		
 		JButton btnAtualizarAutor = new JButton("Atualizar");
+		
+		btnAtualizarAutor.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				leitor.Substituir((Autor)cbAutorSource.getSelectedItem(),(Autor)cbAutorTarget.getSelectedItem());
+			}
+		});
 		btnAtualizarAutor.setBounds(279, 206, 89, 23);
 		panelAutor.add(btnAtualizarAutor);
 		
@@ -128,6 +135,11 @@ public class Apresentacao extends JFrame {
 		panelLocal.add(label_11);
 		
 		JButton btnAtualizarLocalPublicacao = new JButton("Atualizar");
+		btnAtualizarLocalPublicacao.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				leitor.Substituir((LocalPublicacao)cbLocalSource.getSelectedItem(),(LocalPublicacao)cbLocalTarget.getSelectedItem());
+			}
+		});
 		btnAtualizarLocalPublicacao.setBounds(288, 209, 89, 23);
 		panelLocal.add(btnAtualizarLocalPublicacao);
 		
@@ -154,6 +166,11 @@ public class Apresentacao extends JFrame {
 		panelEditora.add(label_15);
 		
 		JButton btnAtualizarEditora = new JButton("Atualizar");
+		btnAtualizarEditora.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				leitor.Substituir((Editora)cbEditoraSource.getSelectedItem(),(Editora) cbEditoraTarget.getSelectedItem());
+			}
+		});
 		btnAtualizarEditora.setBounds(288, 209, 89, 23);
 		panelEditora.add(btnAtualizarEditora);
 		
@@ -200,6 +217,10 @@ public class Apresentacao extends JFrame {
 		panelEntidade.add(btnObterDados);
 		
 		JButton btnAtualizarEntidade = new JButton("Atualizar");
+		btnAtualizarEntidade.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
 		btnAtualizarEntidade.setBounds(275, 209, 89, 23);
 		panelEntidade.add(btnAtualizarEntidade);
 		
@@ -228,6 +249,10 @@ public class Apresentacao extends JFrame {
 		panelPalChave.add(label_9);
 		
 		JButton btnAtualizarPalavrasChave = new JButton("Atualizar");
+		btnAtualizarPalavrasChave.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
 		btnAtualizarPalavrasChave.setBounds(302, 197, 89, 23);
 		panelPalChave.add(btnAtualizarPalavrasChave);
 		
@@ -254,6 +279,12 @@ public class Apresentacao extends JFrame {
 		panelMeioDiv.add(lblTarget);
 		
 		JButton btnAtualizarMeioDivulgacao = new JButton("Atualizar");
+		btnAtualizarMeioDivulgacao.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				//cbMeioDivulgaçãoSource;
+				leitor.Substituir((TipoDivulgacao)cbMeioDivulgaçãoSource.getSelectedItem(),(TipoDivulgacao)cbMeioDivulgaçãoTarget.getSelectedItem());
+			}
+		});
 		btnAtualizarMeioDivulgacao.setBounds(298, 205, 89, 23);
 		panelMeioDiv.add(btnAtualizarMeioDivulgacao);
 		
@@ -280,6 +311,11 @@ public class Apresentacao extends JFrame {
 		panelTipoMaterial.add(cbTipoMaterialTarget);
 		
 		JButton btnAtualizarTipoMaterial = new JButton("Atualizar");
+		btnAtualizarTipoMaterial.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				leitor.Substituir((TipoMaterial)cbTipoMaterialSource.getSelectedItem(), (TipoMaterial)cbTipoMaterialTarget.getSelectedItem());
+			}
+		});
 		btnAtualizarTipoMaterial.setBounds(300, 212, 89, 23);
 		panelTipoMaterial.add(btnAtualizarTipoMaterial);
 		
@@ -363,7 +399,7 @@ public class Apresentacao extends JFrame {
 		lblEdio.setBounds(37, 143, 76, 14);
 		panelMaterial.add(lblEdio);
 		
-		JLabel lblIssn = new JLabel("ISRN");
+		JLabel lblIssn = new JLabel("ISSN");
 		lblIssn.setBounds(37, 186, 76, 14);
 		panelMaterial.add(lblIssn);
 		
@@ -376,8 +412,23 @@ public class Apresentacao extends JFrame {
 		panelMaterial.add(lblIssbn);
 		
 		JButton btnAtualizarMaterial = new JButton("Atualizar");
-		btnAtualizarMaterial.setBounds(285, 214, 89, 23);
+		btnAtualizarMaterial.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				leitor.Substituir( (Material)cbMaterial.getSelectedItem(),tfMaterialTitulo.getText(),tfMaterialAnoProd.getText(),tfMaterialAnoPub.getText()
+						,tfMaterialUrl.getText(),tfNrPaginas.getText(),tfMaterialEdicao.getText(),tfMaterialIsbn.getText(),tfMaterialIssn.getText());
+			}
+		});
+		btnAtualizarMaterial.setBounds(285, 228, 89, 23);
 		panelMaterial.add(btnAtualizarMaterial);
+		
+		tfNrPaginas = new JTextField();
+		tfNrPaginas.setColumns(10);
+		tfNrPaginas.setBounds(492, 183, 165, 20);
+		panelMaterial.add(tfNrPaginas);
+		
+		JLabel lblnrPaginas = new JLabel("Nr de Paginas");
+		lblnrPaginas.setBounds(344, 186, 76, 14);
+		panelMaterial.add(lblnrPaginas);
 		
 		JButton btnSalvar = new JButton("Salvar");
 		btnSalvar.addActionListener(new ActionListener() {

@@ -5,10 +5,10 @@ import java.util.ArrayList;
 
 public class Linha implements Serializable {
 	private ArrayList<Autor> autores = new ArrayList();
+	private ArrayList<PalavraChave> palavrasChaveLinha = new ArrayList();
 	private Editora editoraLinha;
 	private LocalPublicacao localPubliLinha;
-	private Material materialLinha;
-	private PalavraChave palavraChaveLinha;
+	private Material materialLinha;	
 	private TipoDivulgacao tipoDivulLinha;
 	private TipoMaterial tipoMateLinha;
 	private Entidade entidadeLinha;
@@ -74,12 +74,16 @@ public class Linha implements Serializable {
 		this.materialLinha = materialLinha;
 	}
 
-	public PalavraChave getPalavraChaveLinha() {
-		return palavraChaveLinha;
+	public ArrayList<PalavraChave> getPalavrasChaveLinha() {
+		return palavrasChaveLinha;
 	}
 
-	public void setPalavraChaveLinha(PalavraChave palavraChaveLinha) {
-		this.palavraChaveLinha = palavraChaveLinha;
+	public void setPalavrasChaveLinha(ArrayList<PalavraChave> palavrasChaveLinha) {
+		this.palavrasChaveLinha = palavrasChaveLinha;
+	}
+	
+	public void addPalavraChave(PalavraChave palavra) {
+		this.palavrasChaveLinha.add(palavra);
 	}
 
 	public TipoDivulgacao getTipoDivulLinha() {

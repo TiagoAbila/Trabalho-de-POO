@@ -8,7 +8,7 @@ public class Material implements Serializable {
 	private String anoProducao;
 	private String anoPublicacao;
 	private String urlDisponivel;
-	private int nrPaginas;
+	private String nrPaginas;
 	private String edicao;
 	private String nrISBN;
 	private String nrISSN;
@@ -21,8 +21,7 @@ public class Material implements Serializable {
 		this.setAnoProducao(anoProducao);
 		this.setAnoPublicacao(anoPublicacao);
 		this.setUrlDisponivel(urlDisponivel);
-		//TODO: Coverter String para int no numero de páginas
-		//this.setNrPaginas(nrPaginas);
+		this.setNrPaginas(nrPaginas);
 		this.setEdicao(edicao);
 		this.setNrISBN(nrISBN);
 		this.setNrISSN(nrISSN);
@@ -60,11 +59,11 @@ public class Material implements Serializable {
 		this.urlDisponivel = urlDisponivel;
 	}
 
-	public int getNrPaginas() {
+	public String getNrPaginas() {
 		return nrPaginas;
 	}
 
-	public void setNrPaginas(int nrPaginas) {
+	public void setNrPaginas(String nrPaginas) {
 		this.nrPaginas = nrPaginas;
 	}
 

@@ -6,8 +6,9 @@ public class Entidade implements Serializable {
 	private String entidade;
 	private String tipo;
 	
-	public Entidade(String entidade) {
+	public Entidade(String entidade, String tipo) {
 		this.setEntidade(entidade);
+		this.setTipo(tipo);
 	}
 	
 	public String getEntidade() {
