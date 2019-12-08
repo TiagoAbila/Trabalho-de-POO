@@ -20,20 +20,20 @@ public class Linha implements Serializable {
 		this.setIdLinha(idLinha);
 	}	
 
-    public String[] nomesAutoresArray() {
-		String[] nomesAutores = new String[autores.size()];
-		int i = 0;
+    public ArrayList<String> nomesAutoresArray() {
+		ArrayList<String> nomesAutores = new ArrayList();
+		
 		for(Autor autor: autores) {
-			nomesAutores[i++] = autor.getAutor();
+			nomesAutores.add(autor.getAutor());
 		}
 		return nomesAutores;
 	}
     
-    public String[] palavrasChaveArray() {
-		String[] palavrasChave = new String[palavrasChaveLinha.size()];
-		int i = 0;
-		for(Autor autor: autores) {
-			palavrasChave[i++] = autor.getAutor();
+    public ArrayList<String> palavrasChaveArray() {
+		ArrayList<String> palavrasChave = new ArrayList();
+		
+		for(PalavraChave palavra: palavrasChaveLinha) {
+			palavrasChave.add(palavra.getPalavraChave());
 		}
 		return palavrasChave;
 	}

@@ -10,6 +10,8 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.ArrayList;
+
 import org.postgresql.*;
 
 import Controller.Conexao;
@@ -731,8 +733,8 @@ public class Apresentacao extends JFrame {
 		String ds_divulgacao;
 		String nm_entidade;
 		String tp_entidade;
-		String[] nm_autor;
-		String[] ds_palavra_chave;
+		ArrayList<String> nm_autor;
+		ArrayList<String> ds_palavra_chave;
 		String nm_local_publicacao;
 		String nm_editora;
 		String nm_titulo;
@@ -746,7 +748,7 @@ public class Apresentacao extends JFrame {
 		try {
 			conector.setConnection("Trabalho-POO", "postgres", "aluno");
 			for (Linha linha : leitor.getLinhas()) {
-				ds_material = linha.getMaterialLinha().getTitulo();
+				ds_material = linha.getTipoMateLinha().getTipoMaterial();
 				ds_divulgacao = linha.getTipoDivulLinha().getTipoDivulgacao();
 				nm_entidade = linha.getEntidadeLinha().getEntidade();
 				tp_entidade = linha.getEntidadeLinha().getTipo();
