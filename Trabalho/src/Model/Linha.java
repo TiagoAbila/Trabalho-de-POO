@@ -20,6 +20,24 @@ public class Linha implements Serializable {
 		this.setIdLinha(idLinha);
 	}	
 
+    public String[] nomesAutoresArray() {
+		String[] nomesAutores = new String[autores.size()];
+		int i = 0;
+		for(Autor autor: autores) {
+			nomesAutores[i++] = autor.getAutor();
+		}
+		return nomesAutores;
+	}
+    
+    public String[] palavrasChaveArray() {
+		String[] palavrasChave = new String[palavrasChaveLinha.size()];
+		int i = 0;
+		for(Autor autor: autores) {
+			palavrasChave[i++] = autor.getAutor();
+		}
+		return palavrasChave;
+	}
+	
 	public void addAutor(Autor autor) {
 		this.autores.add(autor);
 	}

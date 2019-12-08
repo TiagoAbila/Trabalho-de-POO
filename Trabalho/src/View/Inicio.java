@@ -8,6 +8,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.filechooser.FileFilter;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 import Controller.Conexao;
 import Controller.Leitura;
@@ -42,16 +43,7 @@ public class Inicio extends JFrame {
 					e.printStackTrace();
 				}
 			}
-		});
-
-		// Conexão com o BD
-		Conexao teca = new Conexao();
-		try {
-			teca.setConnection("TECA", "postgres", "102030");
-		} catch (SQLException sqle) {
-			JOptionPane.showMessageDialog(null, sqle.getClass() + "\n" + sqle.getMessage(), null,
-					JOptionPane.ERROR_MESSAGE);
-		}
+		});	
 	}
 
 	public Inicio() {
@@ -66,7 +58,8 @@ public class Inicio extends JFrame {
 		btnNovo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				File file;
-				JFileChooser jfc = new JFileChooser("C:\\Users\\Pedro\\Desktop\\teste");
+				JFileChooser jfc = new JFileChooser("");
+				jfc.setFileFilter(new FileNameExtensionFilter( "CSV", "csv"));
 				int retorno = jfc.showOpenDialog(null);
 				if (retorno == JFileChooser.APPROVE_OPTION) {
 					file = jfc.getSelectedFile();
@@ -92,8 +85,17 @@ public class Inicio extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				Persistencia p = new Persistencia();
 				Leitura l = p.BuscarObjetos();
-				Apresentacao a = new Apresentacao(l);
-				a.setVisible(true);
+				if (l != null) {
+					Apresentacao a = new Apresentacao(l);
+					a.setVisible(true);
+				}
+				else
+				{
+					JOptionPane.showMessageDialog(contentPane,
+					        "Não há nada a ser continuado, favor começar um novo",
+					        "",
+					        JOptionPane.INFORMATION_MESSAGE);
+				}
 			}
 		});
 		btnExiste.setBounds(342, 58, 114, 23);
