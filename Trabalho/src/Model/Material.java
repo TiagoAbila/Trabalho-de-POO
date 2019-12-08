@@ -33,7 +33,7 @@ public class Material implements Serializable {
 
 	public void setTitulo(String titulo) {
 		if (titulo == null) {
-			return;
+			titulo = " ";
 		}
 		this.titulo = titulo;
 	}
@@ -44,7 +44,7 @@ public class Material implements Serializable {
 
 	public void setAnoProducao(String anoProducao) {
 		if (anoProducao == null) {
-			return;
+			anoProducao = " ";
 		}
 		this.anoProducao = anoProducao;
 	}
@@ -55,7 +55,7 @@ public class Material implements Serializable {
 
 	public void setAnoPublicacao(String anoPublicacao) {
 		if (anoPublicacao == null) {
-			return;
+			anoPublicacao = " ";
 		}
 		this.anoPublicacao = anoPublicacao;
 	}
@@ -66,7 +66,7 @@ public class Material implements Serializable {
 
 	public void setUrlDisponivel(String urlDisponivel) {
 		if (urlDisponivel == null) {
-			return;
+			urlDisponivel = " ";
 		}
 		this.urlDisponivel = urlDisponivel;
 	}
@@ -77,7 +77,7 @@ public class Material implements Serializable {
 
 	public void setNrPaginas(String nrPaginas) {
 		if (nrPaginas == null) {
-			return;
+			nrPaginas = " ";
 		}
 		this.nrPaginas = nrPaginas;
 	}

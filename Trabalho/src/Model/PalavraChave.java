@@ -16,7 +16,7 @@ public class PalavraChave implements Serializable {
 
 	public void setPalavraChave(String palavraChave) {
 		if (palavraChave == null) {
-			return;
+			palavraChave = " ";
 		}
 		this.palavraChave = palavraChave;
 	}

@@ -15,7 +15,7 @@ public class TipoMaterial implements Serializable {
 
 	public void setTipoMaterial(String tipoMaterial) {
 		if (tipoMaterial == null) {
-			return;
+			tipoMaterial = " ";
 		}
 		this.tipoMaterial = tipoMaterial;
 	}

@@ -16,7 +16,7 @@ public class TipoDivulgacao implements Serializable {
 
 	public void setTipoDivulgacao(String tipoDivulgacao) {
 		if (tipoDivulgacao == null) {
-			return;
+			tipoDivulgacao = " ";
 		}
 		TipoDivulgacao = tipoDivulgacao;
 	}

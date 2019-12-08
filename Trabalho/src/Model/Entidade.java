@@ -16,7 +16,7 @@ public class Entidade implements Serializable {
 	}
 	public void setEntidade(String entidade) {
 		if (entidade == null) {
-			return;
+			entidade = " ";
 		}
 		this.entidade = entidade;
 	}
@@ -25,7 +25,7 @@ public class Entidade implements Serializable {
 	}
 	public void setTipo(String tipo) {
 		if (tipo == null) {
-			return;
+			tipo = " ";
 		}
 		this.tipo = tipo;
 	}
