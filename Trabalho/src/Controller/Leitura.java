@@ -47,7 +47,7 @@ public class Leitura implements Serializable {
 		try {
 			while ((l = ler.readLine()) != null) {
 				Linha novaLinha = new Linha(linhaCorrente++);
-				newRow = (l.replaceAll(";", " ; ")).split(";");
+				newRow = ((l.replaceAll(";", " ; ")).replaceAll("'"," ")).split(";");
 
 				TipoMaterial novoTipoMat = new TipoMaterial(newRow[0].trim());
 				novoTipoMat = adicionarNaLista(novoTipoMat);
